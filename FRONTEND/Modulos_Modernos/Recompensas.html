@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recompensas - Gestión de Hábitos Saludables</title>
+    <link rel="stylesheet" href="styleRecom.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1><i data-lucide="activity"></i> Hábitos Saludables</h1>
+            </div>
+            <nav>
+                <a href="MisHabitos.html"><i data-lucide="home"></i> Mis Hábitos</a>
+                <a href="ModoFocus.html"><i data-lucide="focus"></i> Modo Focus</a>
+                <a href="Estadisticas.html"><i data-lucide="bar-chart"></i> Estadísticas</a>
+                <a href="Recompensas.html" class="active"><i data-lucide="gift"></i> Recompensas</a>
+                <a href="Historial.html"><i data-lucide="history"></i> Historial</a>
+                <a href="#"><i data-lucide="lightbulb"></i> Sugerencias</a>
+            </nav>
+        </aside>
+        <main class="main-container">
+            <header>
+                <button id="menu-toggle" class="icon-button"><i data-lucide="menu"></i></button>
+                <h2>Recompensas</h2>
+                <div>
+                    <button class="icon-button"><i data-lucide="bell"></i></button>
+                    <button class="icon-button"><i data-lucide="settings"></i></button>
+                </div>
+            </header>
+            <div class="container">
+                <div class="circle" data-degree="90" data-color="#04fc43">
+                    <h2 class="number">90<span>%</span></h2>
+                    <h4>Html</h4>
+                </div>
+                <div class="circle" data-degree="96" data-color="#fee800">
+                    <h2 class="number">96<span>%</span></h2>
+                    <h4>Html</h4>
+                </div>
+                <div class="circle" data-degree="95" data-color="#ff2972">
+                    <h2 class="number">95<span>%</span></h2>
+                    <h4>Html</h4>
+                </div>
+
+            </div>
+            <div class="content">
+                <div class="rewards-summary">
+                    <div class="reward-points">
+                        <h3>Tus Puntos</h3>
+                        <p id="user-points">0</p>
+                    </div>
+                    <div class="reward-level">
+                        <h3>Nivel Actual</h3>
+                        <p id="user-level">Principiante</p>
+                    </div>
+                </div>
+                <div class="rewards-list" id="rewards-container">
+                    <!-- Las recompensas se cargarán dinámicamente aquí -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            let circles = document.querySelectorAll('.circle'); // Corrección: seleccionar todos los elementos con la clase 'circle'
+            circles.forEach(function(progress) {
+                let degree = 0;
+                var targetDegree = parseInt(progress.getAttribute('data-degree'));
+                let color = progress.getAttribute('data-color');
+                let number = progress.querySelector('.number'); // Corrección: seleccionar el elemento 'number' dentro del elemento 'circle'
+    
+                var interval = setInterval(function() {
+                    degree += 1;
+                    if (degree > targetDegree) {
+                        clearInterval(interval);
+                        return;
+                    }
+    
+                    progress.style.background = `conic-gradient(${color} ${degree}%, #222 0%)`;
+                    number.innerHTML = degree + '<span>%</span>';
+                    number.style.color = color;
+                }, 50);
+            });
+        });
+    </script>
+    <script src="Recompesas.js"></script>
+</body>
+</html>

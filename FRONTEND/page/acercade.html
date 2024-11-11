@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página con Dos Columnas</title>
+    <style>
+        :root {
+            --primary-color: #ffffff;
+            --primary-dark: #d4d7dd;
+            --text-color: black;
+            --background-color: #f3f4f6;
+            --card-background: #4B70F5;
+            --footer-background: #1e40af;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box !important; 
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--card-background) !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            font-style: italic;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-background) !important;
+            border-radius: 8px !important;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+            padding: 20px !important;
+            margin-bottom: 30px !important;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            font-style: italic;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        footer {
+            background-color: var(--footer-background);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 15px;
+            }
+        }
+
+.carousel {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+}
+
+.carousel-slides {
+    /* position: relative; */
+    height: 100%;
+}
+
+.carousel-slide {
+    position: fixed;
+    inset: 0;
+    opacity: 0;
+    transition:  1s;
+}
+
+.carousel-slide.active {
+    opacity: 0.1;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white;
+    backdrop-filter: blur(4px);
+    transition: background-color 0.3s;
+}
+
+.carousel-control:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.carousel-control.prev {
+    left: 1rem;
+}
+
+.carousel-control.next {
+    right: 1rem;
+}
+
+.cta-button { 
+    display: inline-block; 
+    background-color: #4CAF50; 
+    color: white; 
+    padding: 12px 24px; 
+    border: none; 
+    border-radius: 4px; 
+    font-size: 1rem; 
+    font-weight: bold; 
+    text-decoration: none; 
+    transition: background-color 0.3s ease; 
+    cursor: pointer; 
+} 
+
+.cta-button:hover { background-color: #45a049; }
+    </style>
+
+</head>
+<body>
+    <header id>
+        <h1>Acerca de Nosotros</h1>
+    </header>
+    
+    <div class="container">
+        <div class="main-content">
+            <div class="card">
+                <center><h2>Nuestra Misión</h2></center>
+                <p>En HabitsUp, estamos comprometidos con ayudarte a alcanzar tu mejor versión. Creemos que los pequeños cambios en nuestros hábitos diarios pueden transformar nuestras vidas de manera significativa. Nuestra misión es proporcionarte las herramientas necesarias para construir, mantener y celebrar hábitos saludables que mejoren tu bienestar físico, mental y emocional.</p>
+                <center><img src="./img/LOGO.png" height="200px"></center>
+            </div>
+            
+            <div class="card">
+                <center><h2>¿Qué Hacemos?</h2></center>
+                <p><strong>Seguimiento de Hábitos Personalizado:</strong> Creamos una experiencia personalizada para cada usuario, permitiéndote establecer y seguir tus hábitos saludables de manera efectiva. Nuestra interfaz intuitiva te facilita registrar tu progreso y ajustar tus metas según tus necesidades y preferencias.</p>
+                <p><strong>Motivación y Recordatorios:</strong> Sabemos que mantener la motivación puede ser un desafío. Por eso, te ofrecemos recordatorios personalizados y mensajes motivacionales que te mantendrán enfocado y comprometido con tus objetivos. Celebramos cada pequeño logro contigo, porque cada paso cuenta.</p>
+                <p><strong>Análisis y Estadísticas:</strong> Te proporcionamos gráficos y estadísticas detalladas para que puedas visualizar tu progreso. Esto te ayuda a entender mejor tu comportamiento y a identificar áreas de mejora, permitiéndote tomar decisiones informadas sobre tu bienestar.</p>
+                <p><strong>Comunidad y Apoyo:</strong> Únete a una comunidad de personas con objetivos similares y encuentra el apoyo que necesitas para mantener tus hábitos saludables. Comparte tus logros, obtén consejos y motívate con las historias inspiradoras de otros usuarios.</p>
+            </div>
+
+
+            <div class="carousel">
+                <div class="carousel-slides">
+                    <div class="carousel-slide active">
+                        <img src="https://images.pexels.com/photos/25596778/pexels-photo-25596778/free-photo-of-mujer-deporte-joven-fitnes.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Slide 1">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://images.pexels.com/photos/26756092/pexels-photo-26756092/free-photo-of-mujer-relajacion-sentado-libro.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Slide 2">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://images.pexels.com/photos/10483713/pexels-photo-10483713.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Slide 3">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://images.pexels.com/photos/8899511/pexels-photo-8899511.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Slide 4">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://images.pexels.com/photos/10059098/pexels-photo-10059098.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Slide 5">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://images.pexels.com/photos/9432637/pexels-photo-9432637.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Slide 6">
+                    </div>
+                </div>
+                <!-- <button class="carousel-control prev" onclick="prevSlide()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+                <button class="carousel-control next" onclick="nextSlide()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button> -->
+            </div>
+
+
+            
+            <div class="card">
+                <center><h2>Nuestro Enfoque</h2></center>
+                <p>En HabitsUp, creemos que la clave para un cambio duradero está en la consistencia y el apoyo. Nuestro enfoque se basa en principios probados de psicología del comportamiento y en la tecnología más avanzada para proporcionarte una experiencia enriquecedora y efectiva.</p>
+                <center><img src="./img/HABITOS-COLON.png" height="200px"></center>
+            </div>
+            
+            <div class="card">
+                <center><h2>¿Por Qué Elegirnos?</h2></center>
+                
+                <p><strong>Interfaz Intuitiva:</strong> Nuestra aplicación es fácil de usar, con un diseño claro y funcional.</p>
+                <p><strong>Personalización:</strong> Adaptamos las recomendaciones y herramientas según tus necesidades y objetivos.</p>
+                <p><strong>Apoyo Constante:</strong> Nunca estarás solo en tu viaje hacia una vida más saludable. Nuestro equipo y comunidad están aquí para apoyarte en cada paso.</p>
+                <p><strong>Éxito Medible:</strong> Te ayudamos a visualizar y celebrar tu progreso, manteniéndote motivado y enfocado.</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Usa HabitsUp hoy y comienza tu viaje hacia una vida más saludable y feliz. ¡Estamos emocionados de ser parte de tu camino hacia el bienestar!</p>
+        <a href="index.html">Ir Ahora</a>    
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
