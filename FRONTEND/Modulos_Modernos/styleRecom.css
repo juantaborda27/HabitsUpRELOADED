@@ -1,5 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nerko+One&display=swap');
 :root {
-    --primary-color: #3498db;
+    --primary-color: #3A1078;
     --primary-color-dark: #2980b9;
     --danger-color: #e74c3c;
     --success-color: #2ecc71;
@@ -19,6 +20,15 @@ body {
     color: var(--text-color);
 }
 
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); */
+    font-style: NONE;
+    color: var(--primary-color);
+    font-family: "Bebas Neue", sans-serif;
+}
+
 .app-container {
     display: grid;
     grid-template-columns: 260px 1fr;
@@ -30,6 +40,7 @@ body {
     background-color: var(--card-background);
     border-right: 1px solid var(--border-color);
     padding: 20px;
+    font-family: "Bebas Neue", sans-serif;
 }
 
 .sidebar-header h1 {

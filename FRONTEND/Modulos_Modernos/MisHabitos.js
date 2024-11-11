@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const confirmDialog = document.getElementById('confirm-dialog');
     const cancelDeleteBtn = document.getElementById('cancel-delete');
     const confirmDeleteBtn = document.getElementById('confirm-delete');
-    const menuToggle = document.getElementById('menu-toggle');
-    const sidebar = document.querySelector('.sidebar');
+    // const menuToggle = document.getElementById('menu-toggle');
+    // const sidebar = document.querySelector('.sidebar');
 
     let habits = [
         { id: 1, name: "Meditar", description: "Práctica diaria de meditación", time: "08:00", frequency: "daily", streak: 5, progress: 70, reminder: true },
@@ -136,6 +136,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Toggle sidebar on mobile
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
     menuToggle.addEventListener('click', function() {
         sidebar.classList.toggle('show-sidebar');
     });
