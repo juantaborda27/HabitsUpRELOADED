@@ -19,18 +19,19 @@
             </div>
             <nav>
                 <a href="MisHabitos.html"><i data-lucide="home"></i> Mis Hábitos</a>
-                <a href="ModoFocus.html" class="active"><i data-lucide="focus"></i> Modo Focus</a>
+                <a href="ModoFocus.html"><i data-lucide="focus"></i> Modo Focus</a>
                 <a href="Estadisticas.html"><i data-lucide="bar-chart"></i> Estadísticas</a>
                 <a href="Recompensas.html"><i data-lucide="gift"></i> Recompensas</a>
                 <a href="Historial.html"><i data-lucide="history"></i> Historial</a>
                 <a href="#"><i data-lucide="lightbulb"></i> Sugerencias</a>
-                <a href="Racha.html"><i data-lucide="flame"></i> Racha</a>
+                <a href="Racha.html" class="active"><i data-lucide="flame"></i> Racha</a>
+
             </nav>
         </aside>
         <main class="main-container">
             <header>
                 <button id="menu-toggle" class="icon-button"><i data-lucide="menu"></i></button>
-                <h2>Modo Focus</h2>
+                <h2>Tu Racha</h2>
                 <div>
                     <button class="icon-button" id="noti"><i data-lucide="bell"></i></button>
                     <button class="icon-button"><i data-lucide="settings"></i></button>
@@ -38,44 +39,25 @@
             </header>          
             <section>
                 <div class="container">
-                    <!-- <h1>MODO FOCUS</h1> -->
-        
-                    <div class="painel">
-                        <p id="work">Trabajo</p>
-                        <p id="break">Descanso</p>
-                    </div>
-        
-                    <div class="timer">
-                        <div class="circle">
-                            <div class="time">
-                                <p id="minutes"></p>
-                                <p>:</p>
-                                <p id="seconds"></p>
+                    <div class="streak-container">
+                        <h2>Racha de Hábitos</h2>
+                        <div class="streak-info">
+                            <div class="streak-item">
+                                <i data-lucide="flame"></i>
+                                <span id="streak-count">0</span>
+                                <p>Días consecutivos</p>
+                            </div>
+                            <div class="streak-item">
+                                <i data-lucide="calendar"></i>
+                                <span id="total-days">0</span>
+                                <p>Días totales</p>
                             </div>
                         </div>
-                    </div>
-        
-                    <div class="controls">
-                        <button id="start" onclick="start()"><i class="fa-solid fa-play"></i></button>
-                        <button id="reset" onclick="reset()"><i class="fa-solid fa-arrow-rotate-left"></i></button>
                     </div>
                 </div>
             </section>
         </main>
     </div>
-
-    <div id="custom-prompt" class="custom-prompt">
-        <div class="prompt-content">
-            <h3 id="prompt-title"></h3>
-            <p id="prompt-description"></p>
-            <input type="text" id="prompt-input">
-            <div class="prompt-buttons">
-                <center><button id="prompt-cancel">Cancelar</button></center>
-                <center><button id="prompt-accept">Aceptar</button></center>
-            </div>
-        </div>
-    </div>
-
     <script src="ModoFocus.js"></script>
 </body>
 </html>

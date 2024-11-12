@@ -1,5 +1,19 @@
 /* Estilos generales */
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nerko+One&display=swap');
+/* :root {
+    --primary-color: #003161;
+    --danger-color: #e74c3c;
+    --success-color: #2ecc71;
+    --warning-color: #f39c12;
+    --info-color: #7AB2D3;
+    --background-color: #d6d0df;
+    --card-background: #000B58;
+    --text-color: #ffffff;
+    --border-color: #000000;
+    --color-shadow: rgb(223, 242, 235);
+} */
+
+
 :root {
     --primary-color: #3A1078;
     --danger-color: #e74c3c;
@@ -10,7 +24,6 @@
     --card-background: #ffffff;
     --text-color: #333333;
     --border-color: #e0e0e0;
-    --color-shadow: rgba(0, 0, 0, 0.1);
 }
 
 body {
@@ -26,7 +39,7 @@ h2 {
     margin-bottom: 20px;
     /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); */
     font-style: NONE;
-    color: var(--primary-color);
+    color: var(--text-color);
     font-family: "Bebas Neue", sans-serif;
 }
 
@@ -110,12 +123,12 @@ section {
     background-color: var(--card-background);
     border-radius: 8px;
     box-shadow: 0 4px 6px var(--color-shadow);
-    padding: 2rem;
+    padding: 3rem;
     text-align: center;
 }
 
 h1 {
-    color: var(--primary-color);
+    color: var(--text-color);
     margin-bottom: 2rem;
 }
 
@@ -245,7 +258,7 @@ h1 {
     padding: 2rem;
     border-radius: 8px;
     width: 300px;
-    box-shadow: 0 4px 6px var(--color-shadow);
+    /* box-shadow: 0 4px 6px var(--color-shadow); */
 }
 
 .prompt-content h3 {
@@ -287,4 +300,69 @@ h1 {
 
 #prompt-cancel:hover, #prompt-accept:hover {
     opacity: 0.9;
+}
+
+#prompt-title{
+    color: var(--text-color);
+    font-size: 16px;
+}
+
+
+
+/* NUEVOS ESTILOS PARA LA RACHA */
+
+/* ... (estilos existentes) ... */
+
+/* Estilos para la sección de Racha */
+.streak-container {
+    margin-top: 2rem;
+    padding: 5rem;
+    background-color: var(--card-background);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px var(--color-shadow);
+}
+
+.streak-container h2 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.streak-info {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.streak-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.streak-item i {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.streak-item span {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.streak-item p {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    margin-top: 0.25rem;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+    .streak-info {
+        flex-direction: column;
+        gap: 1rem;
+    }
 }

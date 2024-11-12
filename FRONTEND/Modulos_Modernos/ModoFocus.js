@@ -101,18 +101,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 promptElement.style.display = 'none';
                 resolve(value);
             };
-  
             cancelButton.onclick = () => {
                 promptElement.style.display = 'none';
                 reject();
             };
         });
     }
-  
-    // Inicializar la pantalla
+  // Inicializar la pantalla
     updateDisplay();
     workElement.classList.add('active');
-  
     // Pedir tiempos al usuario
     customPrompt('Tiempo de trabajo', '¿Cuánto tiempo va a dedicar a la actividad?')
         .then(value => {
@@ -127,4 +124,56 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(() => {
             console.log('Prompt cancelado');
         });
-  });
+
+
+        const button = document.getElementById("noti");
+        const icon = button.querySelector("i");
+
+    // Añadimos el evento de clic
+    button.addEventListener("click", () => {
+        // Verificamos el estado actual y alternamos el icono
+        if (icon.getAttribute("data-lucide") === "bell") {
+            icon.setAttribute("data-lucide", "bell-ring"); // Cambia a otro icono
+        } else {
+            icon.setAttribute("data-lucide", "bell"); // Cambia de vuelta al original
+        }
+        lucide.createIcons(); // Refresca el icono después de cambiar el atributo
+    
+        Notification.requestPermission().then(perm => {
+            if (perm === "granted") {
+                const notification = new Notification("Recuerda Completar Tus Hábitos", {
+                    body: "Cumple tus metas para mejorar Dia a Dia",
+                    icon: "../page/img/LOGO.png" // Verifica que esta ruta sea correcta
+                });
+    
+                notification.addEventListener("error", e => {
+                    console.error("Error en la notificación:", e);
+                    alert("Hubo un error con la notificación");
+                });
+            }
+        }).catch(err => {
+            console.error("Error al solicitar permiso para notificaciones:", err);
+        });
+    });
+    
+
+let notification;
+let interval;
+document.addEventListener("visibilitychange", () =>{
+    if(document.visibilityState === "hidden"){
+        setInterval(() => {
+            notification = new Notification("Vuelve por favor a tu tarea",{
+                body:"Como vas a cumplir tus metas si te distraes",
+                tag:"Vuelve",
+                icon:"../page/img/LOGO.png"
+            })
+        }, 2000)
+    }else{
+        // The tab is visible
+        notification.close();
+    }
+})
+
+
+});
+
