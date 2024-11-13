@@ -116,5 +116,26 @@ document.querySelectorAll('.carousel-control').forEach(control => {
     });
 });
 
+
+
+const text = "Mejora tus hábitos"; // El texto a mostrar
+    const duration = 200; // Duración entre cada carácter (en milisegundos)
+    let i = 0;
+
+    // Obtener el contenedor donde se muestra el texto
+    const typingContainer = document.getElementById("typingText");
+
+    // Función para mostrar cada carácter uno a uno
+    function typeText() {
+    if (i < text.length) {
+        typingContainer.textContent += text[i];
+        i++;
+        setTimeout(typeText, duration);
+    }
+    }
+
+    // Iniciar la animación
+    typeText();
+
 // Inicializar la primera diapositiva
 showSlide(currentSlide);

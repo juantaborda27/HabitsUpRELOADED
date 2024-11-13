@@ -302,3 +302,27 @@ body {
 #bt1:hover, #bt2:hover, #bt3:hover, #bt4:hover {
     background-color: #7241bd; /* Green */
 }
+
+.typing-container {
+    font-family: Arial, sans-serif;
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    line-height: 3rem;
+    letter-spacing: -0.02em;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: blink 0.8s steps(2) infinite;
+    font-style: italic;
+}
+
+  /* Animación de parpadeo del cursor */
+@keyframes blink {
+    0%, 100% {
+    border-color: transparent;
+}
+    50% {
+      border-color: black;
+    }
+  }
