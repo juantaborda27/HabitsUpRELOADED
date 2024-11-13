@@ -15,49 +15,114 @@ document.addEventListener('DOMContentLoaded', function() {
         onChange: filterHabits
     });
 
-    // Simulación de datos de hábitos
-    const habitosSimulados = [
-        { id: 1, nombre: "Hacer ejercicio", estado: "Completado", fecha: new Date(2023, 5, 1) },
-        { id: 2, nombre: "Meditar", estado: "Creado", fecha: new Date(2023, 5, 2) },
-        { id: 3, nombre: "Leer un libro", estado: "Completado", fecha: new Date(2023, 5, 3) },
-        { id: 4, nombre: "Beber agua", estado: "Completado", fecha: new Date(2023, 5, 4) },
-        { id: 5, nombre: "Escribir en el diario", estado: "Creado", fecha: new Date(2023, 5, 5) },
-    ];
+    // Función para obtener los hábitos de MisHabitos
+    function getHabitosFromMisHabitos() {
+        const habitos = JSON.parse(localStorage.getItem('habits')) || [];
+        console.log('Hábitos cargados:', habitos); // Para depuración
+        return habitos.map(habito => ({
+            id: habito.id,
+            nombre: habito.name,
+            estado: habito.completed ? 'completado' : 'creado',
+            fecha: new Date(habito.fechaCreacion)
+        }));
+    }
 
     // Función para filtrar hábitos
     function filterHabits() {
-        const dateFrom = document.getElementById('date-from').value;
-        const dateTo = document.getElementById('date-to').value;
+        const dateFrom = flatpickr("#date-from").selectedDates[0];
+        const dateTo = flatpickr("#date-to").selectedDates[0];
+        const statusFilter = document.querySelector('.status-btn.active').dataset.status;
 
-        const filteredHabits = habitosSimulados.filter(habito => {
-            if (!dateFrom && !dateTo) return true;
-            const habitoDate = habito.fecha.toLocaleDateString('es-ES');
-            if (dateFrom && !dateTo) return habitoDate >= dateFrom;
-            if (!dateFrom && dateTo) return habitoDate <= dateTo;
-            return habitoDate >= dateFrom && habitoDate <= dateTo;
+        const habitos = getHabitosFromMisHabitos();
+        console.log('Hábitos antes del filtro:', habitos); // Para depuración
+
+        const filteredHabits = habitos.filter(habito => {
+            const habitoDate = habito.fecha;
+            const dateCondition = (!dateFrom || habitoDate >= dateFrom) && (!dateTo || habitoDate <= dateTo);
+            const statusCondition = statusFilter === 'all' || habito.estado === statusFilter;
+            return dateCondition && statusCondition;
         });
 
-        renderHabitsTable(filteredHabits);
+        console.log('Hábitos después del filtro:', filteredHabits); // Para depuración
+        renderHabitsTimeline(filteredHabits);
     }
 
-    // Función para renderizar la tabla de hábitos
-    function renderHabitsTable(habits) {
-        const tableBody = document.querySelector('#habits-table tbody');
-        tableBody.innerHTML = '';
+    // Función para renderizar la línea de tiempo de hábitos
+    function renderHabitsTimeline(habits) {
+        const timeline = document.getElementById('habits-timeline');
+        timeline.innerHTML = '';
+
+        if (habits.length === 0) {
+            timeline.innerHTML = '<p class="text-center text-gray-500">No se encontraron hábitos para el período seleccionado.</p>';
+            return;
+        }
 
         habits.forEach(habito => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${habito.nombre}</td>
-                <td>${habito.estado}</td>
-                <td>${habito.fecha.toLocaleDateString('es-ES')}</td>
+            const item = document.createElement('div');
+            item.className = 'timeline-item';
+            item.innerHTML = `
+                <div class="timeline-card">
+                    <div class="timeline-card-header">
+                        <span class="habit-name">${habito.nombre}</span>
+                        <span class="habit-status ${habito.estado}">
+                            <i data-lucide="${habito.estado === 'completado' ? 'check-circle' : 'plus-circle'}"></i>
+                            ${habito.estado.charAt(0).toUpperCase() + habito.estado.slice(1)}
+                        </span>
+                    </div>
+                    <div class="habit-date">Creado: ${habito.fecha.toLocaleDateString('es-ES')}</div>
+                </div>
             `;
-            tableBody.appendChild(row);
+            timeline.appendChild(item);
         });
+
+        lucide.createIcons();
     }
 
-    // Renderizar la tabla inicial
-    renderHabitsTable(habitosSimulados);
+    // Manejar clics en los botones de filtro rápido
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            setQuickFilter(this.textContent.trim());
+        });
+    });
+
+    // Función para establecer filtros rápidos
+    function setQuickFilter(filter) {
+        const today = new Date();
+        let fromDate, toDate;
+
+        switch (filter) {
+            case 'Hoy':
+                fromDate = toDate = today;
+                break;
+            case 'Esta semana':
+                fromDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay());
+                toDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay() + 6);
+                break;
+            case 'Este mes':
+                fromDate = new Date(today.getFullYear(), today.getMonth(), 1);
+                toDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+                break;
+            case 'Este año':
+                fromDate = new Date(today.getFullYear(), 0, 1);
+                toDate = new Date(today.getFullYear(), 11, 31);
+                break;
+        }
+
+        flatpickr("#date-from").setDate(fromDate);
+        flatpickr("#date-to").setDate(toDate);
+        filterHabits();
+    }
+
+    // Manejar clics en los botones de filtro de estado
+    document.querySelectorAll('.status-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.status-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            filterHabits();
+        });
+    });
 
     // Toggle sidebar en móviles
     const menuToggle = document.getElementById('menu-toggle');
@@ -65,4 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
     menuToggle.addEventListener('click', function() {
         sidebar.classList.toggle('show-sidebar');
     });
+
+    // Inicializar la vista con todos los hábitos
+    filterHabits();
 });
