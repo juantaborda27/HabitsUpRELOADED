@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nerko+One&family=Montserrat&display=swap');
-
+/* Estilos existentes */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nerko+One&display=swap');
 :root {
     --primary-color: #3A1078;
     --danger-color: #e74c3c;
@@ -23,6 +23,8 @@ body {
 h2 {
     font-size: 1.8rem;
     margin-bottom: 20px;
+    /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); */
+    font-style: NONE;
     color: var(--primary-color);
     font-family: "Bebas Neue", sans-serif;
 }
@@ -72,6 +74,26 @@ h2 {
     color: white;
 }
 
+nav {
+    display: flex;
+    flex-direction: column;
+}
+
+nav a {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    text-decoration: none;
+    color: var(--text-color);
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+nav a.active, nav a:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
 nav a i {
     margin-right: 10px;
 }
@@ -95,7 +117,7 @@ header {
     padding: 20px;
 }
 
-/* Habit Grid and Cards */
+
 .habits-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -105,67 +127,38 @@ header {
 
 .habit-card {
     background-color: var(--card-background);
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 250px;
 }
 
 .habit-card h3 {
-    font-size: 1.3rem;
     margin-top: 0;
-    margin-bottom: 10px;
-    color: var(--primary-color);
 }
 
-.habit-card p {
-    font-size: 1rem;
-    margin-bottom: 15px;
-    flex-grow: 1;
-}
-
-.habit-details {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    font-size: 0.9rem;
-}
 
 .habit-progress {
-    height: 12px;
+    height: 10px;
     background-color: #e0e0e0;
-    border-radius: 6px;
+    border-radius: 5px;
     margin: 10px 0;
     overflow: hidden;
 }
 
+
 .habit-progress-bar {
     height: 100%;
     background-color: var(--primary-color);
-    transition: width 0.3s ease;
 }
+
 
 .habit-actions {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     margin-top: 15px;
 }
 
-.habit-badge {
-    font-size: 1.5rem;
-    margin-right: 8px;
-}
 
-.habit-badge-earned {
-    color: gold;
-}
-
-/* Buttons */
 .primary-button {
     background-color: var(--primary-color);
     color: white;
@@ -173,6 +166,64 @@ header {
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
+}
+
+
+
+.icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+
+.modal-content {
+    background-color: var(--card-background);
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 500px;
+}
+
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="time"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
 }
 
 .secondary-button {
@@ -193,202 +244,108 @@ header {
     cursor: pointer;
 }
 
-.icon-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 5px;
-}
+/* CSS PARA RECOMENDACIONES */
 
-/* Modal */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-}
-
-.modal-content {
+.suggestions-container {
     background-color: var(--card-background);
-    margin: 15% auto;
-    padding: 20px;
     border-radius: 8px;
-    width: 80%;
-    max-width: 500px;
-}
-
-/* Form */
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.form-group input[type="text"],
-.form-group input[type="time"],
-.form-group input[type="date"],
-.form-group select,
-.form-group textarea {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-}
-
-.form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
     margin-top: 20px;
 }
 
-/* Suggestions */
-.suggestions-container {
-    background-color: var(--background-color);
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    margin-top: 30px;
-}
-
 .suggestions-description {
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     color: var(--text-color);
-    font-size: 1.2em;
-    text-align: center;
+    font-size: 1.1em;
 }
 
 .suggestions-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
 }
 
 .suggestion-card {
-    background-color: var(--card-background);
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 25px;
+    background-color: var(--background-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
 }
 
 .suggestion-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .suggestion-card h3 {
     margin-top: 0;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     color: var(--primary-color);
-    font-size: 1.4em;
+    font-size: 1.2em;
 }
 
 .suggestion-card p {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     color: var(--text-color);
-    flex-grow: 1;
 }
 
 .suggestion-card .suggestion-details {
-    font-size: 0.95em;
+    font-size: 0.9em;
     color: var(--text-color);
-    opacity: 0.9;
-    margin-bottom: 20px;
+    opacity: 0.8;
+    margin-bottom: 15px;
 }
 
 .suggestion-card .suggestion-details p {
     display: flex;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
 }
 
 .suggestion-card .suggestion-details i {
-    margin-right: 8px;
-    color: var(--primary-color);
+    margin-right: 5px;
 }
 
 .add-suggestion-btn {
     background-color: var(--primary-color);
     color: white;
     border: none;
-    padding: 12px 20px;
-    border-radius: 8px;
+    padding: 10px 15px;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s ease;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1em;
-    font-weight: bold;
+    font-size: 1em;
 }
 
 .add-suggestion-btn:hover {
     background-color: var(--primary-color);
     opacity: 0.9;
-    transform: scale(1.05);
 }
 
 .add-suggestion-btn i {
-    margin-right: 8px;
+    margin-right: 5px;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .app-container {
-        grid-template-columns: 1fr;
-    }
-
-    .sidebar {
-        display: none;
-    }
-
-    .habits-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .habit-card {
-        min-height: auto;
-    }
-}
-
-.reminder-notification {
+.notification {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: var(--primary-color);
+    background-color: var(--success-color);
     color: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-    max-width: 300px;
+    animation: fadeInOut 3s ease-in-out;
 }
 
-.reminder-notification h3 {
-    margin-top: 0;
-    margin-bottom: 10px;
-}
-
-.reminder-notification p {
-    margin-bottom: 15px;
-}
-
-.close-notification {
-    background-color: white;
-    color: var(--primary-color);
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    10%, 90% { opacity: 1; }
 }
