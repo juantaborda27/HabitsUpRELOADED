@@ -12,7 +12,7 @@
     <div class="app-container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <center><img src="../page/img/LOGO.png" alt="" width="60px" height="40px"></center>
+                <center><img src="../page/img/LOGO.png" alt="" width="60" height="40"></center>
             </div>
             <nav>
                 <a href="MisHabitos.html"><i data-lucide="home"></i> Mis Hábitos</a>
@@ -20,7 +20,7 @@
                 <a href="Estadisticas.html"><i data-lucide="bar-chart"></i> Estadísticas</a>
                 <a href="Recompensas.html" class="active"><i data-lucide="gift"></i> Recompensas</a>
                 <a href="Historial.html"><i data-lucide="history"></i> Historial</a>
-                <a href="#"><i data-lucide="lightbulb"></i> Sugerencias</a>
+                <a href="Sugerencias.html"><i data-lucide="lightbulb"></i> Sugerencias</a>
                 <a href="Racha.html"><i data-lucide="flame"></i> Racha</a>
             </nav>
         </aside>
@@ -34,19 +34,20 @@
                 </div>
             </header>
             <div class="container">
-                <div class="circle" data-degree="90" data-color="#04fc43">
-                    <h2 class="number">90<span>%</span></h2>
-                    <h4>Habitos</h4>
+                <div class="circle-container">
+                    <div class="circle" data-degree="0" data-color="#04fc43">
+                        <h2 class="number">0</h2>
+                    </div>
+                    <h4>Hábitos Completados</h4>
+                    <p class="circle-status" id="habits-status">Hábitos en progreso</p>
                 </div>
-                <div class="circle" data-degree="96" data-color="#fee800">
-                    <h2 class="number">96<span>%</span></h2>
-                    <h4>Html</h4>
+                <div class="circle-container">
+                    <div class="circle" data-degree="0" data-color="#fee800">
+                        <h2 class="number">0</h2>
+                    </div>
+                    <h4>Racha de 100 días</h4>
+                    <p class="circle-status" id="streak-status">Racha en progreso</p>
                 </div>
-                <div class="circle" data-degree="95" data-color="#ff2972">
-                    <h2 class="number">95<span>%</span></h2>
-                    <h4>Html</h4>
-                </div>
-
             </div>
             <div class="content">
                 <div class="rewards-summary">
@@ -66,29 +67,17 @@
         </main>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function(event) {
-            let circles = document.querySelectorAll('.circle'); // Corrección: seleccionar todos los elementos con la clase 'circle'
-            circles.forEach(function(progress) {
-                let degree = 0;
-                var targetDegree = parseInt(progress.getAttribute('data-degree'));
-                let color = progress.getAttribute('data-color');
-                let number = progress.querySelector('.number'); // Corrección: seleccionar el elemento 'number' dentro del elemento 'circle'
+    <div id="reward-modal" class="reward-modal">
+        <div class="reward-modal-content">
+            <h2 id="reward-modal-title"></h2>
+            <p id="reward-modal-message"></p>
+            <button id="reward-modal-close" class="reward-modal-button">Aceptar</button>
+        </div>
+    </div>
+
+
     
-                var interval = setInterval(function() {
-                    degree += 1;
-                    if (degree > targetDegree) {
-                        clearInterval(interval);
-                        return;
-                    }
-    
-                    progress.style.background = `conic-gradient(${color} ${degree}%, #222 0%)`;
-                    number.innerHTML = degree + '<span>%</span>';
-                    number.style.color = color;
-                }, 50);
-            });
-        });
-    </script>
+
     <script src="Recompesas.js"></script>
 </body>
 </html>

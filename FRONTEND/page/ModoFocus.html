@@ -15,7 +15,7 @@
     <div class="app-container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <center><img src="../page/img/LOGO.png" alt="" width="60px" height="40px"></center>
+                <center><img src="../page/img/LOGO.png" alt="Logo de la aplicación" width="60" height="40"></center>
             </div>
             <nav>
                 <a href="MisHabitos.html"><i data-lucide="home"></i> Mis Hábitos</a>
@@ -29,16 +29,16 @@
         </aside>
         <main class="main-container">
             <header>
-                <button id="menu-toggle" class="icon-button"><i data-lucide="menu"></i></button>
+                <button id="menu-toggle" class="icon-button" aria-label="Alternar menú"><i data-lucide="menu"></i></button>
                 <h2>Modo Focus</h2>
                 <div>
-                    <button class="icon-button" id="noti"><i data-lucide="bell"></i></button>
-                    <button class="icon-button"><i data-lucide="settings"></i></button>
+                    <button class="icon-button" id="noti" aria-label="Notificaciones"><i data-lucide="bell"></i></button>
+                    <button class="icon-button" id="settings" aria-label="Configuración"><i data-lucide="settings"></i></button>
                 </div>
             </header>          
             <section>
                 <div class="container">
-                    <!-- <h1>MODO FOCUS</h1> -->
+                    <h2 id="activity-name">Actividad sin nombre</h2>
         
                     <div class="painel">
                         <p id="work">Trabajo</p>
@@ -56,8 +56,9 @@
                     </div>
         
                     <div class="controls">
-                        <button id="start" onclick="start()"><i class="fa-solid fa-play"></i></button>
-                        <button id="reset" onclick="reset()"><i class="fa-solid fa-arrow-rotate-left"></i></button>
+                        <button id="start" aria-label="Iniciar/Pausar"><i class="fa-solid fa-play"></i></button>
+                        <button id="reset" aria-label="Reiniciar"><i class="fa-solid fa-arrow-rotate-left"></i></button>
+                        <button id="config" aria-label="Configurar"><i class="fa-solid fa-cog"></i></button>
                     </div>
                 </div>
             </section>
@@ -68,10 +69,10 @@
         <div class="prompt-content">
             <h3 id="prompt-title"></h3>
             <p id="prompt-description"></p>
-            <input type="text" id="prompt-input">
+            <div id="prompt-input-container"></div>
             <div class="prompt-buttons">
-                <center><button id="prompt-cancel">Cancelar</button></center>
-                <center><button id="prompt-accept">Aceptar</button></center>
+                <button id="prompt-cancel">Cancelar</button>
+                <button id="prompt-accept">Aceptar</button>
             </div>
         </div>
     </div>

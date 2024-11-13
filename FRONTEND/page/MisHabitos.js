@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="habit-details">
                     <span>Hora: ${habit.time}</span>
                     <span>Racha: ${habit.streak} días</span>
+                    <span>Creado: ${new Date(habit.fechaCreacion).toLocaleDateString('es-ES')}</span>
                 </div>
                 <div class="habit-progress">
                     <div class="habit-progress-bar" style="width: ${habit.progress}%"></div>
@@ -107,19 +108,27 @@ document.addEventListener('DOMContentLoaded', function() {
     function completeHabit(id) {
         const habitIndex = habits.findIndex(h => h.id === id);
         if (habitIndex !== -1) {
-            habits[habitIndex].streak += 1;
-            habits[habitIndex].progress = Math.min(100, habits[habitIndex].progress + 10);
+            const habit = habits[habitIndex];
+            const today = new Date().toDateString();
             
-            const deadline = new Date(habits[habitIndex].deadline);
-            const today = new Date();
-            if (today <= deadline) {
-                habits[habitIndex].completed = true;
-                showNotification(`¡Felicidades! Has completado el hábito "${habits[habitIndex].name}" antes de la fecha límite.`);
+            if (habit.lastCompletedDate === today) {
+                showNotification("Ya has completado este hábito hoy. ¡Vuelve mañana!");
+                return;
+            }
+    
+            habit.streak += 1;
+            habit.progress = Math.min(100, habit.progress + 10);
+            habit.lastCompletedDate = today;
+            
+            const deadline = new Date(habit.deadline);
+            if (new Date() <= deadline) {
+                habit.completed = true;
+                showNotification(`¡Felicidades! Has completado el hábito "${habit.name}" antes de la fecha límite.`);
             }
             
             saveHabits();
             renderHabits();
-            showNotification(`¡Hábito "${habits[habitIndex].name}" completado! Racha: ${habits[habitIndex].streak} días`);
+            showNotification(`¡Hábito "${habit.name}" completado! Racha: ${habit.streak} días`);
         }
     }
 
@@ -134,11 +143,13 @@ document.addEventListener('DOMContentLoaded', function() {
             reminder: document.getElementById('habit-reminder').checked,
             streak: 0,
             progress: 0,
-            completed: false
+            completed: false,
+            lastCompletedDate: null,
+            fechaCreacion: new Date().toISOString() // Añadimos la fecha de creación
         };
 
         if (editingHabitId) {
-            habits = habits.map(h => h.id === editingHabitId ? {...h, ...habitData} : h);
+            habits = habits.map(h => h.id === editingHabitId ? {...h, ...habitData, fechaCreacion: h.fechaCreacion} : h);
         } else {
             habitData.id = Date.now();
             habits.push(habitData);
@@ -170,12 +181,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 const reminderTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
                 
                 if (reminderTime > now) {
+                    const timeUntilReminder = reminderTime - now;
                     setTimeout(() => {
-                        showNotification(`¡Recordatorio! Es hora de "${habit.name}"`);
-                    }, reminderTime - now);
+                        showReminderNotification(habit);
+                    }, timeUntilReminder);
                 }
             }
         });
+    }
+
+    function showReminderNotification(habit) {
+        const notification = document.createElement('div');
+        notification.className = 'reminder-notification';
+        notification.innerHTML = `
+            <h3>¡Recordatorio de hábito!</h3>
+            <p>Es hora de: ${habit.name}</p>
+            <button class="close-notification">Cerrar</button>
+        `;
+        document.body.appendChild(notification);
+
+        notification.querySelector('.close-notification').addEventListener('click', () => {
+            notification.remove();
+        });
+
+        setTimeout(() => {
+            notification.remove();
+        }, 10000); // La notificación desaparecerá después de 10 segundos
     }
 
     const menuToggle = document.getElementById('menu-toggle');
@@ -184,101 +215,10 @@ document.addEventListener('DOMContentLoaded', function() {
         sidebar.classList.toggle('show-sidebar');
     });
 
-    function completeHabit(id) {
-        const habitIndex = habits.findIndex(h => h.id === id);
-        if (habitIndex !== -1) {
-            const habit = habits[habitIndex];
-            const today = new Date().toDateString();
-            
-            if (habit.lastCompletedDate === today) {
-                showNotification("Ya has completado este hábito hoy. ¡Vuelve mañana!");
-                return;
-            }
-    
-            habit.streak += 1;
-            habit.progress = Math.min(100, habit.progress + 10);
-            habit.lastCompletedDate = today;
-            
-            const deadline = new Date(habit.deadline);
-            if (new Date() <= deadline) {
-                habit.completed = true;
-                showNotification(`¡Felicidades! Has completado el hábito "${habit.name}" antes de la fecha límite.`);
-            }
-            
-            saveHabits();
-            renderHabits();
-            showNotification(`¡Hábito "${habit.name}" completado! Racha: ${habit.streak} días`);
-        }
-    }
+    loadHabits();
 
     
-    habitForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const habitData = {
-            name: document.getElementById('habit-name').value,
-            description: document.getElementById('habit-description').value,
-            frequency: document.getElementById('habit-frequency').value,
-            time: document.getElementById('habit-time').value,
-            deadline: document.getElementById('habit-deadline').value,
-            reminder: document.getElementById('habit-reminder').checked,
-            streak: 0,
-            progress: 0,
-            completed: false,
-            lastCompletedDate: null
-        };
-    });
 
-    // ... (código existente) ...
 
-function scheduleReminders() {
-    habits.forEach(habit => {
-        if (habit.reminder) {
-            const [hours, minutes] = habit.time.split(':');
-            const now = new Date();
-            const reminderTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
-            
-            if (reminderTime > now) {
-                const timeUntilReminder = reminderTime - now;
-                setTimeout(() => {
-                    showReminderNotification(habit);
-                }, timeUntilReminder);
-            }
-        }
-    });
-}
 
-function showReminderNotification(habit) {
-    const notification = document.createElement('div');
-    notification.className = 'reminder-notification';
-    notification.innerHTML = `
-        <h3>¡Recordatorio de hábito!</h3>
-        <p>Es hora de: ${habit.name}</p>
-        <button class="close-notification">Cerrar</button>
-    `;
-    document.body.appendChild(notification);
-
-    notification.querySelector('.close-notification').addEventListener('click', () => {
-        notification.remove();
-    });
-
-    setTimeout(() => {
-    notification.remove();
-    }, 10000); // La notificación desaparecerá después de 10 segundos
-                    }
-
-// Modificar la función loadHabits para incluir scheduleReminders
-            function loadHabits() {
-                    habits = JSON.parse(localStorage.getItem('habits')) || [];
-                    renderHabits();
-                    scheduleReminders();
-            }
-
-            // Modificar la función saveHabits para incluir scheduleReminders
-          function saveHabits() {
-                localStorage.setItem('habits', JSON.stringify(habits));
-                scheduleReminders();
-            }
-
-            // ... (resto del código existente) ...
-            loadHabits();
 });
