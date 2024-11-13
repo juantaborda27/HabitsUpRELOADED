@@ -102,7 +102,7 @@ document.getElementById('authModal').addEventListener('submit', function(e) {
     .catch(error => {
         console.error('Error en la solicitud:', error);
         alert('Error en la conexión. Intenta de nuevo más tarde.');
-        window.location.href = '../../Modulos_Modernos/MisHabitos.html';
+        window.location.href = 'MisHabitos.html';
     });
 });
 

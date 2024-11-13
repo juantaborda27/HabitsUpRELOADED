@@ -19,7 +19,7 @@
                 <a href="Estadisticas.html"><i data-lucide="bar-chart"></i> Estadísticas</a>
                 <a href="Recompensas.html"><i data-lucide="gift"></i> Recompensas</a>
                 <a href="Historial.html"><i data-lucide="history"></i> Historial</a>
-                <a href="#"><i data-lucide="lightbulb"></i> Sugerencias</a>
+                <a href="Sugerencias.html"><i data-lucide="lightbulb"></i> Sugerencias</a>
                 <a href="Racha.html"><i data-lucide="flame"></i> Racha</a>
             </nav>
         </aside>
@@ -31,7 +31,8 @@
                     <button class="icon-button"><i data-lucide="bell"></i></button>
                     <button class="icon-button"><i data-lucide="settings"></i></button>
                 </div>
-            </header>        <div class="content">
+            </header>
+            <div class="content">
                 <button id="new-habit-btn" class="primary-button"><i data-lucide="plus"></i>Nuevo Hábito</button>
                 <div id="habits-container" class="habits-grid"></div>
             </div>
@@ -86,6 +87,56 @@
             </div>
         </div>
     </div>
+
+    <!-- ... (código HTML existente) ... -->
+
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <h2 id="modal-title">Crear Nuevo Hábito</h2>
+        <form id="habit-form">
+            <div class="form-group">
+                <label for="habit-name">Nombre</label>
+                <input type="text" id="habit-name" required>
+            </div>
+            <div class="form-group">
+                <label for="habit-description">Descripción</label>
+                <textarea id="habit-description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="habit-frequency">Frecuencia</label>
+                <select id="habit-frequency" required>
+                    <option value="daily">Diario</option>
+                    <option value="weekly">Semanal</option>
+                    <option value="monthly">Mensual</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="habit-time">Hora</label>
+                <input type="time" id="habit-time" required>
+            </div>
+            <div class="form-group">
+                <label for="habit-deadline">Fecha límite</label>
+                <input type="date" id="habit-deadline" required>
+            </div>
+            <div class="form-group">
+                <label for="habit-reminder">
+                    <input type="checkbox" id="habit-reminder">
+                    Recordatorio
+                </label>
+            </div>
+            <div class="form-actions">
+                <button type="button" id="cancel-habit">Cancelar</button>
+                <button type="submit" class="primary-button">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ... (resto del código HTML) ... -->
+
+    <!-- Añadido el elemento de notificación -->
+    <div id="notification" class="notification" style="display: none;"></div>
+    <div id="notification-container"></div>
 
     <script src="MisHabitos.js"></script>
 </body>
