@@ -213,4 +213,65 @@ document.addEventListener('DOMContentLoaded', function(){
             sidebar.classList.toggle('show-sidebar');
         });
     }
+
+    function saveEvent(date, title, description, time, frequency, reminder) {
+        if (!events[date]) {
+            events[date] = [];
+        }
+
+        const newEvent = { title, description, time, frequency, reminder };
+        events[date].push(newEvent);
+
+        localStorage.setItem('calendarEvents', JSON.stringify(events));
+
+        // Agregar el evento como un hábito en MisHabitos
+        addEventToHabits(newEvent);
+
+        updateCalendar();
+        updateEventList(date);
+    }
+
+    function addEventToHabits(event) {
+        let habits = JSON.parse(localStorage.getItem('habits')) || [];
+        const newHabit = {
+            id: Date.now(),
+            name: event.title,
+            description: event.description,
+            time: event.time,
+            frequency: event.frequency,
+            reminder: event.reminder,
+            streak: 0,
+            progress: 0,
+            completed: false,
+            lastCompletedDate: null,
+            fechaCreacion: new Date().toISOString()
+        };
+        habits.push(newHabit);
+        localStorage.setItem('habits', JSON.stringify(habits));
+    }
+
+    saveButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        const date = eventDateInput.value;
+        const title = eventTitleInput.value;
+        const description = eventDescriptionInput.value;
+        const time = eventTimeInput.value;
+        const frequency = eventFrequencyInput.value;
+        const reminder = eventReminderInput.checked;
+        const id = eventIdInput.value;
+
+        if (id === '') {
+            saveEvent(date, title, description, time, frequency, reminder);
+        } else {
+            // Actualizar evento existente
+            events[date][parseInt(id)] = { title, description, time, frequency, reminder };
+            localStorage.setItem('calendarEvents', JSON.stringify(events));
+            updateCalendar();
+            updateEventList(date);
+        }
+
+        modal.style.display = 'none';
+        console.log('Evento guardado:', { title, description, time, frequency, reminder });
+    });
+    
 });
