@@ -238,3 +238,27 @@ h2 {
     width: 100%;
     margin-top: 10px;
 }
+
+#saveButton , #addEventButton{
+    background-color: var(--primary-color);
+    color: white;
+    padding: 5px;
+    border-radius: 0.5em;
+    border: none;
+}
+
+#deleteButton{
+    background-color: var(--danger-color);
+    color: white;
+    padding: 5px;
+    border-radius: 0.5em;
+    border: none;
+}
+
+#saveButton:hover , #addEventButton:hover{
+    background-color: var(--warning-color);
+}
+
+#deleteButton:hover{
+    background-color:#e27265;
+}

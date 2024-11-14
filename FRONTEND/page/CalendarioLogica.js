@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function(){
         saveButton.onclick(e);
     }
 
-    saveButton.onclick = function(e) {
+    saveButton.addEventListener('click', function(e) {
         e.preventDefault();
         const date = eventDateInput.value;
         const title = eventTitleInput.value;
@@ -160,27 +160,27 @@ document.addEventListener('DOMContentLoaded', function(){
         const frequency = eventFrequencyInput.value;
         const reminder = eventReminderInput.checked;
         const id = eventIdInput.value;
-
+    
         if (!events[date]) {
             events[date] = [];
         }
-
+    
         const newEvent = { title, description, time, frequency, reminder };
-
+    
         if (id === '') {
             events[date].push(newEvent);
         } else {
             events[date][parseInt(id)] = newEvent;
         }
-
+    
         localStorage.setItem('calendarEvents', JSON.stringify(events));
         updateCalendar();
         updateEventList(date);
         modal.style.display = 'none';
-        
-        // Añade esta línea para depuración
-        console.log('Evento guardado:', newEvent);
-    };
+    
+        console.log('Evento guardado:', newEvent); // Para verificar el guardado
+    });
+    
 
     deleteButton.onclick = function() {
         const date = eventDateInput.value;

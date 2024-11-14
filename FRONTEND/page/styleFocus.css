@@ -283,7 +283,7 @@ h1 {
 .prompt-buttons button {
     padding: 0.5rem 1rem;
     border: none;
-    border-radius: 4px;
+    border-radius: 0.5em;
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -294,12 +294,16 @@ h1 {
 }
 
 #prompt-accept {
-    background-color: var(--success-color);
+    background-color: var(--primary-color);
     color: white;
 }
 
-#prompt-cancel:hover, #prompt-accept:hover {
-    opacity: 0.9;
+#prompt-accept:hover {
+    background-color:#5b00e4;
+}
+
+#prompt-cancel:hover{
+    background-color:#d31500;
 }
 
 #prompt-title{
