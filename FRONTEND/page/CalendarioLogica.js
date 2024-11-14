@@ -2,156 +2,215 @@ document.addEventListener('DOMContentLoaded', function(){
     // Initialize Lucide icons
     lucide.createIcons();
 
-
     const calendar = document.getElementById('calendar');
-        const modal = document.getElementById('eventModal');
-        const closeBtn = document.getElementsByClassName('close')[0];
-        const eventForm = document.getElementById('eventForm');
-        const eventDateInput = document.getElementById('eventDate');
-        const eventTitleInput = document.getElementById('eventTitle');
-        const eventIdInput = document.getElementById('eventId');
-        const saveButton = document.getElementById('saveButton');
-        const deleteButton = document.getElementById('deleteButton');
-        const prevMonthBtn = document.getElementById('prevMonth');
-        const nextMonthBtn = document.getElementById('nextMonth');
-        const currentMonthElement = document.getElementById('currentMonth');
+    const modal = document.getElementById('eventModal');
+    const closeBtn = document.getElementsByClassName('close')[0];
+    const eventForm = document.getElementById('eventForm');
+    const eventList = document.getElementById('eventList');
+    const addEventButton = document.getElementById('addEventButton');
+    const eventDateInput = document.getElementById('eventDate');
+    const eventTitleInput = document.getElementById('eventTitle');
+    const eventIdInput = document.getElementById('eventId');
+    const eventDescriptionInput = document.getElementById('eventDescription');
+    const eventTimeInput = document.getElementById('eventTime');
+    const eventFrequencyInput = document.getElementById('eventFrequency');
+    const eventReminderInput = document.getElementById('eventReminder');
+    const saveButton = document.getElementById('saveButton');
+    const deleteButton = document.getElementById('deleteButton');
+    const prevMonthBtn = document.getElementById('prevMonth');
+    const nextMonthBtn = document.getElementById('nextMonth');
+    const currentMonthElement = document.getElementById('currentMonth');
 
-        let currentDate = new Date();
-        let events = JSON.parse(localStorage.getItem('calendarEvents')) || {};
+    let currentDate = new Date();
+    let events = JSON.parse(localStorage.getItem('calendarEvents')) || {};
 
-        function createCalendar() {
-            calendar.innerHTML = '';
-            const weekdays = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
-            weekdays.forEach(day => {
-                const dayElement = document.createElement('div');
-                dayElement.textContent = day;
-                dayElement.className = 'weekday';
-                calendar.appendChild(dayElement);
-            });
+    function createCalendar() {
+        calendar.innerHTML = '';
+        const weekdays = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+        weekdays.forEach(day => {
+            const dayElement = document.createElement('div');
+            dayElement.textContent = day;
+            dayElement.className = 'weekday';
+            calendar.appendChild(dayElement);
+        });
 
-            const year = currentDate.getFullYear();
-            const month = currentDate.getMonth();
-            const firstDay = new Date(year, month, 1);
-            const lastDay = new Date(year, month + 1, 0);
-            const daysInMonth = lastDay.getDate();
-            const startingDay = firstDay.getDay();
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0);
+        const daysInMonth = lastDay.getDate();
+        const startingDay = firstDay.getDay();
 
-            currentMonthElement.textContent = `${firstDay.toLocaleString('default', { month: 'long' })} ${year}`;
+        currentMonthElement.textContent = `${firstDay.toLocaleString('default', { month: 'long' })} ${year}`;
 
-            for (let i = 0; i < startingDay; i++) {
+        for (let i = 0; i < startingDay; i++) {
+            const dayElement = document.createElement('div');
+            dayElement.className = 'day other-month';
+            calendar.appendChild(dayElement);
+        }
+
+        for (let i = 1; i <= daysInMonth; i++) {
+            const dayElement = document.createElement('div');
+            dayElement.textContent = i;
+            dayElement.className = 'day';
+            const date = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+            dayElement.setAttribute('data-date', date);
+            dayElement.addEventListener('click', openModal);
+            calendar.appendChild(dayElement);
+        }
+
+        const remainingDays = 7 - ((startingDay + daysInMonth) % 7);
+        if (remainingDays < 7) {
+            for (let i = 0; i < remainingDays; i++) {
                 const dayElement = document.createElement('div');
                 dayElement.className = 'day other-month';
                 calendar.appendChild(dayElement);
             }
-
-            for (let i = 1; i <= daysInMonth; i++) {
-                const dayElement = document.createElement('div');
-                dayElement.textContent = i;
-                dayElement.className = 'day';
-                const date = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
-                dayElement.setAttribute('data-date', date);
-                dayElement.addEventListener('click', openModal);
-                calendar.appendChild(dayElement);
-            }
-
-            const remainingDays = 7 - ((startingDay + daysInMonth) % 7);
-            if (remainingDays < 7) {
-                for (let i = 0; i < remainingDays; i++) {
-                    const dayElement = document.createElement('div');
-                    dayElement.className = 'day other-month';
-                    calendar.appendChild(dayElement);
-                }
-            }
-
-            updateCalendar();
         }
 
-        function updateCalendar() {
-            document.querySelectorAll('.day:not(.other-month)').forEach(day => {
-                const date = day.getAttribute('data-date');
-                if (events[date]) {
-                    day.classList.add('has-event');
-                    day.setAttribute('aria-label', `${day.textContent}, Tiene evento: ${events[date].title}`);
-                } else {
-                    day.classList.remove('has-event');
-                    day.removeAttribute('aria-label');
-                }
-            });
-        }
+        updateCalendar();
+    }
 
-        function openModal(e) {
-            const date = e.target.getAttribute('data-date');
-            eventDateInput.value = date;
-            if (events[date]) {
-                const event = events[date];
-                eventTitleInput.value = event.title;
-                eventIdInput.value = event.id;
-                document.getElementById('eventDescription').value = event.description || '';
-                document.getElementById('eventTime').value = event.time || '';
-                document.getElementById('eventFrequency').value = event.frequency || 'once';
-                document.getElementById('eventReminder').checked = event.reminder || false;
-                deleteButton.style.display = 'block';
+    function updateCalendar() {
+        document.querySelectorAll('.day:not(.other-month)').forEach(day => {
+            const date = day.getAttribute('data-date');
+            day.innerHTML = day.textContent; // Limpia los indicadores existentes
+            if (events[date] && events[date].length > 0) {
+                day.classList.add('has-event');
+                const eventCount = events[date].length;
+                day.setAttribute('aria-label', `${day.textContent}, Tiene ${eventCount} evento${eventCount > 1 ? 's' : ''}`);
+                for (let i = 0; i < Math.min(eventCount, 3); i++) {
+                    const indicator = document.createElement('div');
+                    indicator.className = 'event-indicator';
+                    day.appendChild(indicator);
+                }
             } else {
-                eventTitleInput.value = '';
-                eventIdInput.value = '';
-                document.getElementById('eventDescription').value = '';
-                document.getElementById('eventTime').value = '';
-                document.getElementById('eventFrequency').value = 'once';
-                document.getElementById('eventReminder').checked = false;
-                deleteButton.style.display = 'none';
+                day.classList.remove('has-event');
+                day.removeAttribute('aria-label');
             }
-            modal.style.display = 'block';
-        }
+        });
+    }
 
-        closeBtn.onclick = function() {
+    function openModal(e) {
+        const date = e.target.getAttribute('data-date');
+        eventDateInput.value = date;
+        updateEventList(date);
+        modal.style.display = 'block';
+    }
+
+    function updateEventList(date) {
+        eventList.innerHTML = '';
+        if (events[date] && events[date].length > 0) {
+            events[date].forEach((event, index) => {
+                const eventItem = document.createElement('div');
+                eventItem.className = 'event-item';
+                eventItem.textContent = event.title;
+                eventItem.addEventListener('click', () => editEvent(date, index));
+                eventList.appendChild(eventItem);
+            });
+        } else {
+            eventList.innerHTML = '<p>No hay eventos para este día.</p>';
+        }
+        eventForm.style.display = 'none';
+        addEventButton.style.display = 'block';
+    }
+
+    function editEvent(date, index) {
+        const event = events[date][index];
+        eventIdInput.value = index;
+        eventTitleInput.value = event.title;
+        eventDescriptionInput.value = event.description || '';
+        eventTimeInput.value = event.time || '';
+        eventFrequencyInput.value = event.frequency || 'once';
+        eventReminderInput.checked = event.reminder || false;
+        eventForm.style.display = 'block';
+        addEventButton.style.display = 'none';
+        deleteButton.style.display = 'block';
+    }
+
+    addEventButton.onclick = function() {
+        eventForm.reset();
+        eventIdInput.value = '';
+        eventForm.style.display = 'block';
+        addEventButton.style.display = 'none';
+        deleteButton.style.display = 'none';
+    }
+
+    closeBtn.onclick = function() {
+        modal.style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
             modal.style.display = 'none';
         }
+    }
 
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
+    eventForm.onsubmit = function(e) {
+        e.preventDefault();
+        saveButton.onclick(e);
+    }
+
+    saveButton.onclick = function(e) {
+        e.preventDefault();
+        const date = eventDateInput.value;
+        const title = eventTitleInput.value;
+        const description = eventDescriptionInput.value;
+        const time = eventTimeInput.value;
+        const frequency = eventFrequencyInput.value;
+        const reminder = eventReminderInput.checked;
+        const id = eventIdInput.value;
+
+        if (!events[date]) {
+            events[date] = [];
         }
 
-        eventForm.onsubmit = function(e) {
-            e.preventDefault();
-            const date = eventDateInput.value;
-            const title = eventTitleInput.value;
-            const id = eventIdInput.value || Date.now().toString();
-            const description = document.getElementById('eventDescription').value;
-            const time = document.getElementById('eventTime').value;
-            const frequency = document.getElementById('eventFrequency').value;
-            const reminder = document.getElementById('eventReminder').checked;
-            events[date] = { id, title, description, time, frequency, reminder };
-            localStorage.setItem('calendarEvents', JSON.stringify(events));
-            updateCalendar();
-            modal.style.display = 'none';
+        const newEvent = { title, description, time, frequency, reminder };
+
+        if (id === '') {
+            events[date].push(newEvent);
+        } else {
+            events[date][parseInt(id)] = newEvent;
         }
 
-        deleteButton.onclick = function() {
-            const date = eventDateInput.value;
+        localStorage.setItem('calendarEvents', JSON.stringify(events));
+        updateCalendar();
+        updateEventList(date);
+        modal.style.display = 'none';
+        
+        // Añade esta línea para depuración
+        console.log('Evento guardado:', newEvent);
+    };
+
+    deleteButton.onclick = function() {
+        const date = eventDateInput.value;
+        const id = parseInt(eventIdInput.value);
+        events[date].splice(id, 1);
+        if (events[date].length === 0) {
             delete events[date];
-            localStorage.setItem('calendarEvents', JSON.stringify(events));
-            updateCalendar();
-            modal.style.display = 'none';
         }
+        localStorage.setItem('calendarEvents', JSON.stringify(events));
+        updateCalendar();
+        updateEventList(date);
+    }
 
-        prevMonthBtn.onclick = function() {
-            currentDate.setMonth(currentDate.getMonth() - 1);
-            createCalendar();
-        }
-
-        nextMonthBtn.onclick = function() {
-            currentDate.setMonth(currentDate.getMonth() + 1);
-            createCalendar();
-        }
-
+    prevMonthBtn.onclick = function() {
+        currentDate.setMonth(currentDate.getMonth() - 1);
         createCalendar();
+    }
 
+    nextMonthBtn.onclick = function() {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        createCalendar();
+    }
+
+    createCalendar();
 
     const menuToggle = document.getElementById('menu-toggle');
     const sidebar = document.querySelector('.sidebar');
-    menuToggle.addEventListener('click', function() {
-        sidebar.classList.toggle('show-sidebar');
-    });
+    if (menuToggle) {
+        menuToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('show-sidebar');
+        });
+    }
 });

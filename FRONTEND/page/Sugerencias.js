@@ -71,7 +71,8 @@ document.addEventListener('DOMContentLoaded', function() {
             frequency: habit.frequency,
             reminder: habit.reminder,
             streak: 0,
-            progress: 0
+            progress: 0,
+            categori : habit.categori
         };
         habits.push(newHabit);
         localStorage.setItem('habits', JSON.stringify(habits));

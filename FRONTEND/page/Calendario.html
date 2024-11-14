@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendario</title>
+    <title>Calendario Interactivo</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <link rel="stylesheet" href="stylescalendario.css">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -11,68 +11,81 @@
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
 </head>
 <body>
-<div class="app-container">
-    <aside class="sidebar">
-        <div class="sidebar-header">
-        <center><img src="../page/img/LOGO.png" alt="" width="60px" height="40px"></center>
-        </div>
-        <nav>
-            <a href="MisHabitos.html"><i data-lucide="home"></i> Mis Hábitos</a>
-            <a href="ModoFocus.html"><i data-lucide="focus"></i> Modo Focus</a>
-            <a href="Estadisticas.html"><i data-lucide="bar-chart"></i> Estadísticas</a>
-            <a href="Recompensas.html"><i data-lucide="gift"></i> Recompensas</a>
-            <a href="Historial.html"><i data-lucide="history"></i> Historial</a>
-            <a href="Sugerencias.html"><i data-lucide="lightbulb"></i> Sugerencias</a>
-            <a href="Racha.html"><i data-lucide="flame"></i> Racha</a>
-            <a href="Calendario.html" class="active"><i data-lucide="calendar"></i> Calendario</a>
-        </nav>
-    </aside>
-    <main class="main-container">
-        <header>
-            <!-- <button id="menu-toggle" class="icon-button"><i data-lucide="menu"></i></button> -->
-            <center><h2>Calendario</h2></center>
-            <div>
-                <!-- <button class="icon-button"><i data-lucide="bell"></i></button>
-                <button class="icon-button"><i data-lucide="settings"></i></button> -->
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <center><img src="../page/img/LOGO.png" alt="Logo" width="60" height="40" /></center>
             </div>
-        </header>
-        <div class="calendar-container">
-            <div class="calendar-header">
-                <button id="prevMonth" aria-label="Mes anterior" class="btnCalendar">&lt;</button>
-                <h2 id="currentMonth"></h2>
-                <button id="nextMonth" aria-label="Mes siguiente" class="btnCalendar">&gt;</button>
+            <nav>
+                <a href="MisHabitos.html"><i data-lucide="home"></i> Mis Hábitos</a>
+                <a href="ModoFocus.html"><i data-lucide="focus"></i> Modo Focus</a>
+                <a href="Estadisticas.html"><i data-lucide="bar-chart"></i> Estadísticas</a>
+                <a href="Recompensas.html"><i data-lucide="gift"></i> Recompensas</a>
+                <a href="Historial.html"><i data-lucide="history"></i> Historial</a>
+                <a href="Sugerencias.html"><i data-lucide="lightbulb"></i> Sugerencias</a>
+                <a href="Racha.html"><i data-lucide="flame"></i> Racha</a>
+                <a href="Calendario.html" class="active"><i data-lucide="calendar"></i> Calendario</a>
+            </nav>
+        </aside>
+        <main class="main-container">
+            <header>
+                <h2>Calendario</h2>
+            </header>
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <button id="prevMonth" aria-label="Mes anterior" class="btnCalendar">&lt;</button>
+                    <h2 id="currentMonth"></h2>
+                    <button id="nextMonth" aria-label="Mes siguiente" class="btnCalendar">&gt;</button>
+                </div>
+                <div id="calendar"></div>
             </div>
-            <div id="calendar"></div>
-        </div>
-    
-        <div id="eventModal" role="dialog" aria-labelledby="modalTitle">
-            <div class="modal-content">
-                <span class="close" aria-label="Cerrar">&times;</span>
-                <h2 id="modalTitle">Añadir/Editar Evento</h2>
-                <form id="eventForm">
-                    <input type="hidden" id="eventDate">
-                    <input type="hidden" id="eventId">
-                    <label for="eventTitle">Título del evento:</label>
-                    <input type="text" id="eventTitle" required>
-                    <label for="eventDescription">Descripción:</label>
-                    <textarea id="eventDescription"></textarea>
-                    <label for="eventTime">Hora:</label>
-                    <input type="time" id="eventTime">
-                    <label for="eventFrequency">Frecuencia:</label>
-                    <select id="eventFrequency">
-                        <option value="once">Una sola vez</option>
-                        <option value="daily">Diaria</option>
-                        <option value="weekly">Semanal</option>
-                        <option value="monthly">Mensual</option>
-                    </select>
-                    <label for="eventReminder">Recordatorio:</label>
-                    <input type="checkbox" id="eventReminder">
-                    <button type="submit" id="saveButton">Guardar</button>
-                    <button type="button" id="deleteButton" class="delete">Eliminar</button>
-                </form>
+        
+            <div id="eventModal" role="dialog" aria-labelledby="modalTitle">
+                <div class="modal-content">
+                    <span class="close" aria-label="Cerrar">&times;</span>
+                    <h2 id="modalTitle">Eventos del día</h2>
+                    <div id="eventList"></div>
+                    <button id="addEventButton">Añadir Nuevo Evento</button>
+                    <form id="eventForm" style="display: none;">
+                        <input type="hidden" id="eventDate">
+                        <input type="hidden" id="eventId">
+                        <div class="form-group">
+                            <label for="eventTitle">Título del evento:</label>
+                            <input type="text" id="eventTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventDescription">Descripción:</label>
+                            <textarea id="eventDescription" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventTime">Hora:</label>
+                            <input type="time" id="eventTime">
+                        </div>
+                        <div class="form-group">
+                            <label for="eventFrequency">Frecuencia:</label>
+                            <select id="eventFrequency">
+                                <option value="once">Una vez</option>
+                                <option value="daily">Diario</option>
+                                <option value="weekly">Semanal</option>
+                                <option value="monthly">Mensual</option>
+                                <option value="yearly">Anual</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventReminder">
+                                <input type="checkbox" id="eventReminder">
+                                Activar recordatorio
+                            </label>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" id="saveButton">Guardar</button>
+                            <button type="button" id="deleteButton" class="delete">Eliminar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-    </main>
-</div>
+        </main>
+    </div>
 
     <script src="CalendarioLogica.js"></script>
 </body>
