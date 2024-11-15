@@ -116,6 +116,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
     
+            // Incrementar el contador total de hábitos completados
+            let totalHabitosCompletados = parseInt(localStorage.getItem('totalHabitosCompletados') || '0');
+            totalHabitosCompletados++;
+            localStorage.setItem('totalHabitosCompletados', totalHabitosCompletados);
+    
             habit.streak += 1;
             habit.progress = Math.min(100, habit.progress + 10);
             habit.lastCompletedDate = today;
@@ -129,7 +134,44 @@ document.addEventListener('DOMContentLoaded', function() {
             saveHabits();
             renderHabits();
             showNotification(`¡Hábito "${habit.name}" completado! Racha: ${habit.streak} días`);
+    
+            // Emitir evento de hábito completado con el total actualizado
+            const habitoCompletadoEvent = new CustomEvent('habitoCompletado', {
+                detail: { totalCompletados: totalHabitosCompletados }
+            });
+            window.dispatchEvent(habitoCompletadoEvent);
+    
+            // Actualizar el contador en la interfaz si existe
+            const contadorElement = document.getElementById('habits-completed');
+            if (contadorElement) {
+                contadorElement.textContent = totalHabitosCompletados;
+            }
+    
+            // Depuración
+            console.log('Total hábitos completados:', totalHabitosCompletados);
+            console.log('Elemento en la interfaz:', contadorElement);
         }
+    }
+    
+    
+    // Añadir al inicio del archivo, después de DOMContentLoaded
+    function inicializarContador() {
+        // Recuperar el total de hábitos completados del localStorage
+        const totalHabitosCompletados = localStorage.getItem('totalHabitosCompletados') || '0';
+        
+        // Actualizar el contador en la interfaz si existe
+        const contadorElement = document.getElementById('habits-completed');
+        if (contadorElement) {
+            contadorElement.textContent = totalHabitosCompletados;
+        }
+    }
+    
+    // Añadir la llamada a inicializarContador al final de loadHabits
+    function loadHabits() {
+        habits = JSON.parse(localStorage.getItem('habits')) || [];
+        renderHabits();
+        scheduleReminders();
+        inicializarContador(); // Añadir esta línea
     }
 
     habitForm.addEventListener('submit', function(e) {

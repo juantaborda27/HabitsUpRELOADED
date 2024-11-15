@@ -1,175 +1,167 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Lucide icons
+document.addEventListener('DOMContentLoaded', function () {
     lucide.createIcons();
 
-    // Simulated user data (replace with real data from your backend)
-    const userData = {
-        points: 1500,
-        level: 'Intermedio',
-        habitsCompleted: 0,
-        streakDays: 0
-    };
+    // Variables globales
+    let experiencia = 0;
+    let nivel = 1;
+    let habitosCompletados = 0;
+    const experienciaPorHabito = 10;
 
-    // Simulated rewards data (replace with real data from your backend)
-    const rewardsData = [
-        { id: 1, name: 'Día de descanso extra', cost: 500, icon: 'coffee' },
-        { id: 2, name: 'Sesión de meditación guiada', cost: 750, icon: 'star' },
-        { id: 3, name: 'Clase de yoga online', cost: 1000, icon: 'leaf' },
-        { id: 4, name: 'Libro de desarrollo personal', cost: 1500, icon: 'book-open' },
-        { id: 5, name: 'Consulta con nutricionista', cost: 2000, icon: 'apple' }
+    // Consejos motivacionales
+    const consejos = [
+        "La consistencia es clave para formar nuevos hábitos.",
+        "Celebra tus pequeños logros diarios.",
+        "Mantén el enfoque en tus objetivos.",
+        "Cada día es una nueva oportunidad para mejorar.",
+        "El progreso constante lleva al éxito.",
+        "Pequeños cambios, grandes resultados.",
+        "La disciplina vence a la motivación.",
+        "Construye hábitos duraderos paso a paso.",
+        "Tu futuro depende de tus hábitos actuales.",
+        "La persistencia es el camino al éxito."
     ];
+    let ultimoConsejo = '';
 
-    // Update user data
-    function updateUserData() {
-        document.getElementById('user-points').textContent = userData.points;
-        document.getElementById('user-level').textContent = userData.level;
+    // Inicialización del contador de hábitos completados
+    function inicializarContador() {
+        const progreso = JSON.parse(localStorage.getItem('recompensas')) || {};
+        habitosCompletados = progreso.habitosCompletados || 0;
+        actualizarUI();
     }
 
-    // Render rewards
-    const rewardsContainer = document.getElementById('rewards-container');
-    rewardsData.forEach(reward => {
-        const rewardElement = createRewardElement(reward);
-        rewardsContainer.appendChild(rewardElement);
-    });
+    // Función para actualizar la interfaz
+    function actualizarUI() {
+        const experienciaNecesaria = nivel * 100;
+        const porcentajeExperiencia = (experiencia / experienciaNecesaria) * 100;
 
-    // Toggle sidebar on mobile
-    const menuToggle = document.getElementById('menu-toggle');
-    const sidebar = document.querySelector('.sidebar');
-    menuToggle.addEventListener('click', function() {
-        sidebar.classList.toggle('show-sidebar');
-    });
+        document.getElementById('current-level').textContent = nivel;
+        document.getElementById('current-xp').textContent = experiencia;
+        document.getElementById('xp-needed').textContent = experienciaNecesaria;
+        document.getElementById('habits-completed').textContent = habitosCompletados;
 
-    function createRewardElement(reward) {
-        const rewardDiv = document.createElement('div');
-        rewardDiv.className = 'reward-item';
-        rewardDiv.innerHTML = `
-            <div class="reward-icon">
-                <i data-lucide="${reward.icon}"></i>
-            </div>
-            <div class="reward-info">
-                <h3>${reward.name}</h3>
-                <p>${reward.cost} puntos</p>
-            </div>
-            <button class="redeem-button" data-reward-id="${reward.id}">Canjear</button>
-        `;
-
-        const redeemButton = rewardDiv.querySelector('.redeem-button');
-        redeemButton.addEventListener('click', () => redeemReward(reward));
-
-        return rewardDiv;
-    }
-
-    function redeemReward(reward) {
-        if (userData.points >= reward.cost) {
-            userData.points -= reward.cost;
-            updateUserData();
-            alert(`¡Has canjeado "${reward.name}"! Disfruta tu recompensa.`);
-        } else {
-            alert('No tienes suficientes puntos para canjear esta recompensa.');
-        }
-    }
-
-    // Re-initialize Lucide icons for dynamically added content
-    lucide.createIcons();
-
-    // Función para actualizar los círculos de progreso
-    function updateProgressCircles() {
-        let circles = document.querySelectorAll('.circle');
-        circles.forEach(function(progress, index) {
-            let degree = 0;
-            let targetDegree;
-            if (index === 0) {
-                targetDegree = userData.habitsCompleted;
-            } else {
-                targetDegree = (userData.streakDays / 100) * 100; // Convertir a porcentaje
-            }
-            let color = progress.getAttribute('data-color');
-            let number = progress.querySelector('.number');
-    
-            var interval = setInterval(function() {
-                degree += 1;
-                if (degree > targetDegree) {
-                    clearInterval(interval);
-                    if (index === 0 && targetDegree >= 100) {
-                        document.getElementById('habits-status').textContent = 'Hábitos completados';
-                        userData.points += 500; // Puntos por completar hábitos diarios
-                        updateUserData();
-                        alert('¡Felicidades! Has completado todos tus hábitos diarios. Recibes 500 puntos extra.');
-                    } else if (index === 1 && targetDegree >= 100) {
-                        document.getElementById('streak-status').textContent = 'Racha completada 100 días';
-                        userData.points += 1000;
-                        updateUserData();
-                        alert('¡Felicidades! Has completado una racha de 100 días. Recibes 1000 puntos extra.');
-                    }
-                    return;
-                }
-    
-                progress.style.background = `conic-gradient(${color} ${degree * 3.6}deg, #222 0deg)`;
-                number.textContent = Math.round(degree) + '%';
-            }, 50); // Aumentado el intervalo para ralentizar la animación
+        // Animación suave de la barra de progreso
+        const progressBar = document.getElementById('experience-bar');
+        progressBar.animate([{ width: progressBar.style.width }, { width: `${porcentajeExperiencia}%` }], {
+            duration: 500,
+            fill: 'forwards',
+            easing: 'ease-in-out'
         });
     }
 
-    // Simular la actualización de hábitos completados y días de racha
-    function simulateProgress() {
-        userData.habitsCompleted = 2;//Math.min(100, userData.habitsCompleted + 5); // Reducido el incremento
-        userData.streakDays = Math.min(100, userData.streakDays + 2); // Reducido el incremento
-        updateProgressCircles();
+    // Función para actualizar el consejo de manera aleatoria
+    function actualizarConsejo() {
+        const consejoElement = document.getElementById('current-tip');
+        let nuevoConsejo;
 
-        //userData.habitsCompleted < 100
-        if (userData.streakDays < 100) {
-            setTimeout(simulateProgress, 3000); // Aumentado el intervalo entre actualizaciones
+        do {
+            nuevoConsejo = consejos[Math.floor(Math.random() * consejos.length)];
+        } while (nuevoConsejo === ultimoConsejo);
+
+        ultimoConsejo = nuevoConsejo;
+        consejoElement.style.opacity = '0';
+        setTimeout(() => {
+            consejoElement.textContent = nuevoConsejo;
+            consejoElement.style.opacity = '1';
+        }, 500);
+    }
+
+    // Manejo del evento de completar hábito
+    window.addEventListener('habitoCompletado', function (event) {
+        if (event.detail && event.detail.totalCompletados) {
+            habitosCompletados = event.detail.totalCompletados;
+            experiencia += experienciaPorHabito;
+
+            if (experiencia >= nivel * 100) {
+                nivel++;
+                experiencia -= (nivel - 1) * 100;
+                mostrarLogro(`¡Nivel ${nivel} alcanzado!`, `Has alcanzado el nivel ${nivel}. ¡Sigue así!`);
+            }
+
+            actualizarUI();
+            guardarProgreso();
+        }
+    });
+
+    // Función para completar un hábito
+    function completarHabito() {
+        habitosCompletados++;
+        experiencia += experienciaPorHabito;
+
+        if (experiencia >= nivel * 100) {
+            nivel++;
+            experiencia -= (nivel - 1) * 100;
+            mostrarLogro(`¡Nivel ${nivel} alcanzado!`, `Has alcanzado el nivel ${nivel}. ¡Sigue así!`);
+        }
+
+        actualizarUI();
+        guardarProgreso();
+    }
+
+    // Función para mostrar un logro
+    function mostrarLogro(titulo, descripcion) {
+        const logrosContainer = document.getElementById('achievements-container');
+        const logroElement = document.createElement('div');
+        logroElement.className = 'achievement-item';
+        logroElement.innerHTML = `
+            <i data-lucide="star" class="achievement-icon"></i>
+            <div class="achievement-content">
+                <h3>${titulo}</h3>
+                <p>${descripcion}</p>
+            </div>
+        `;
+        logrosContainer.prepend(logroElement);
+        lucide.createIcons();
+
+        // Limitar a mostrar solo los últimos 3 logros
+        if (logrosContainer.children.length > 3) {
+            logrosContainer.removeChild(logrosContainer.lastChild);
         }
     }
 
-    // Iniciar la simulación
-    updateUserData();
-    simulateProgress();
+    // Función para guardar el progreso en localStorage
+    function guardarProgreso() {
+        const progresoActual = JSON.parse(localStorage.getItem('recompensas')) || {};
+        const progresoNuevo = {
+            experiencia,
+            nivel,
+            habitosCompletados
+        };
 
-
-    const rewardModal = document.getElementById('reward-modal');
-    const rewardModalTitle = document.getElementById('reward-modal-title');
-    const rewardModalMessage = document.getElementById('reward-modal-message');
-    const rewardModalClose = document.getElementById('reward-modal-close');
-
-    function showRewardModal(title, message) {
-        rewardModalTitle.textContent = title;
-        rewardModalMessage.textContent = message;
-        rewardModal.classList.add('show');
-        createConfetti();
-    }
-
-    function hideRewardModal() {
-        rewardModal.classList.remove('show');
-    }
-
-    rewardModalClose.addEventListener('click', hideRewardModal);
-
-    function createConfetti() {
-        for (let i = 0; i < 50; i++) {
-            const confetti = document.createElement('div');
-            confetti.classList.add('confetti');
-            confetti.style.left = Math.random() * 100 + 'vw';
-            confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
-            confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
-            document.body.appendChild(confetti);
-
-            confetti.addEventListener('animationend', function() {
-                confetti.remove();
-            });
+        if (JSON.stringify(progresoActual) !== JSON.stringify(progresoNuevo)) {
+            localStorage.setItem('recompensas', JSON.stringify(progresoNuevo));
         }
     }
 
-    function redeemReward(reward) {
-        if (userData.points >= reward.cost) {
-            userData.points -= reward.cost;
-            updateUserData();
-            showRewardModal('¡Recompensa Canjeada!', `Has canjeado "${reward.name}". ¡Disfruta tu recompensa!`);
-        } else {
-            showRewardModal('Puntos Insuficientes', 'No tienes suficientes puntos para canjear esta recompensa.');
+    // Función para cargar el progreso desde localStorage
+    function cargarProgreso() {
+        try {
+            const progreso = JSON.parse(localStorage.getItem('recompensas')) || {};
+            experiencia = progreso.experiencia || 0;
+            nivel = progreso.nivel || 1;
+            habitosCompletados = progreso.habitosCompletados || 0;
+            actualizarUI();
+        } catch (error) {
+            console.error("Error al cargar el progreso:", error);
+            localStorage.removeItem('recompensas');
+            experiencia = 0;
+            nivel = 1;
+            habitosCompletados = 0;
+            actualizarUI();
         }
     }
 
+    // Inicialización de la aplicación
+    cargarProgreso();
+    actualizarConsejo();
+    inicializarContador();
 
-    
+    // Cambiar el consejo cada 30 segundos
+    setInterval(actualizarConsejo, 30000);
+
+    // Toggle del sidebar para dispositivos móviles
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    menuToggle.addEventListener('click', function () {
+        sidebar.classList.toggle('show-sidebar');
+    });
 });

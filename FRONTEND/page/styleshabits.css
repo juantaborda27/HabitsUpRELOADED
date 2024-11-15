@@ -392,3 +392,124 @@ header {
     border-radius: 4px;
     cursor: pointer;
 }
+
+
+/* Estilos para el perfil de usuario */
+.user-profile {
+    background-color: var(--card-background);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.user-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.user-profile h3 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.user-profile p {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+#edit-profile-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#edit-profile-btn:hover {
+    background-color: var(--primary-color-dark);
+}
+
+.user-stats {
+    background-color: var(--card-background);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+}
+
+.user-stats h3 {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.user-stats ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.user-stats li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.user-stats li:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.user-stats span {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Responsive design for user profile */
+@media (max-width: 768px) {
+    .user-profile, .user-stats {
+        padding: 1rem;
+    }
+
+    .user-avatar {
+        width: 100px;
+        height: 100px;
+    }
+
+    .user-profile h3 {
+        font-size: 1.2rem;
+    }
+
+    .user-stats h3 {
+        font-size: 1.1rem;
+    }
+}
+
+/* Animaciones para mejorar la experiencia del usuario */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.user-profile, .user-stats {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.user-avatar {
+    transition: transform 0.3s ease;
+}
+
+.user-avatar:hover {
+    transform: scale(1.05);
+}

@@ -476,3 +476,21 @@ h1 {
     margin-top: 10px;
 }
 
+/* Animaciones para mejorar la experiencia del usuario */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.user-profile, .user-stats {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.user-avatar {
+    transition: transform 0.3s ease;
+}
+
+.user-avatar:hover {
+    transform: scale(1.05);
+}
+

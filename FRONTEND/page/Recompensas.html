@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recompensas - Gestión de Hábitos Saludables</title>
+    <title>Recompensas</title>
     <link rel="stylesheet" href="styleRecom.css">
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body>
     <div class="app-container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <center><img src="../page/img/LOGO.png" alt="" width="60" height="40"></center>
+                <center><img src="../page/img/LOGO.png" alt="" width="60px" height="40px"></center>
             </div>
             <nav>
-                <a href="MisHabitos.html"><i data-lucide="home"></i> Mis Hábitos</a>
+                <a href="MisHabitos.html"><i data-lucide="home" ></i> Mis Hábitos</a>
                 <a href="ModoFocus.html"><i data-lucide="focus"></i> Modo Focus</a>
                 <a href="Estadisticas.html"><i data-lucide="bar-chart"></i> Estadísticas</a>
                 <a href="Recompensas.html" class="active"><i data-lucide="gift"></i> Recompensas</a>
@@ -33,53 +33,61 @@
                 <div>
                     <button class="icon-button"><i data-lucide="bell"></i></button>
                     <button class="icon-button"><i data-lucide="settings"></i></button>
+                    <a href="PerfilUsuario.html" class="icon-button"><i data-lucide="user"></i></a>
                 </div>
             </header>
-            <div class="container">
-                <div class="circle-container">
-                    <div class="circle" data-degree="0" data-color="#04fc43">
-                        <h2 class="number">0</h2>
-                    </div>
-                    <h4>Hábitos Completados</h4>
-                    <p class="circle-status" id="habits-status">Hábitos en progreso</p>
-                </div>
-                <div class="circle-container">
-                    <div class="circle" data-degree="0" data-color="#fee800">
-                        <h2 class="number">0</h2>
-                    </div>
-                    <h4>Racha de 100 días</h4>
-                    <p class="circle-status" id="streak-status">Racha en progreso</p>
-                </div>
-            </div>
             <div class="content">
-                <div class="rewards-summary">
-                    <div class="reward-points">
-                        <h3>Tus Puntos</h3>
-                        <p id="user-points">0</p>
+                <div class="rewards-module">
+                    <div class="level-section">
+                        <div class="level-header">
+                            <i data-lucide="trophy" class="trophy-icon"></i>
+                            <span>Nivel <span id="current-level">2</span></span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div id="experience-bar" class="progress-fill"></div>
+                            </div>
+                            <div class="xp-badge">
+                                <span id="current-xp">58</span>/<span id="xp-needed">200</span> XP
+                            </div>
+                        </div>
                     </div>
-                    <div class="reward-level">
-                        <h3>Nivel Actual</h3>
-                        <p id="user-level">Principiante</p>
+                    
+                    <div class="achievements-section">
+                        <h2>Logros Recientes</h2>
+                        <div class="achievements-list" id="achievements-container">
+                            <div class="achievement-item">
+                                <i data-lucide="star" class="achievement-icon"></i>
+                                <div class="achievement-content">
+                                    <h3>¡Nivel 2 alcanzado!</h3>
+                                    <p>Has alcanzado el nivel 2. ¡Sigue así!</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="rewards-list" id="rewards-container">
-                    <!-- Las recompensas se cargarán dinámicamente aquí -->
+
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <i data-lucide="lightbulb" class="info-icon"></i>
+                            <h3>Consejo del día</h3>
+                            <p id="current-tip">La consistencia es clave para formar nuevos hábitos.</p>
+                        </div>
+                        <div class="info-card">
+                            <i data-lucide="award" class="info-icon"></i>
+                            <h3>Hábitos Completados</h3>
+                            <p id="habits-completed">42</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
     </div>
-
-    <div id="reward-modal" class="reward-modal">
-        <div class="reward-modal-content">
-            <h2 id="reward-modal-title"></h2>
-            <p id="reward-modal-message"></p>
-            <button id="reward-modal-close" class="reward-modal-button">Aceptar</button>
-        </div>
-    </div>
-
-
-    
-
-    <script src="Recompesas.js"></script>
+    <script src="Recompensas.js"></script>
+    <!-- INICIALIZAR LOS ICONOS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+        });
+    </script>
 </body>
 </html>
