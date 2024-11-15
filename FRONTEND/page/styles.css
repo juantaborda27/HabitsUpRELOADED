@@ -305,10 +305,10 @@ body {
 
 .typing-container {
     font-family: Arial, sans-serif;
-    font-size: 3rem;
+    font-size: 6rem;
     font-weight: bold;
     text-align: center;
-    line-height: 3rem;
+    line-height: 8rem;
     letter-spacing: -0.02em;
     display: inline-block;
     white-space: nowrap;
@@ -326,3 +326,21 @@ body {
       border-color: black;
     }
   }
+
+  /* Animaciones para mejorar la experiencia del usuario */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.user-profile, .user-stats {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.user-avatar {
+    transition: transform 0.3s ease;
+}
+
+.user-avatar:hover {
+    transform: scale(1.05);
+}
