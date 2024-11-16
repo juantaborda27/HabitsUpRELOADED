@@ -28,13 +28,15 @@
         </aside>
         <main class="main-container">
             <header>
-                <center><h2>Calendario</h2></center>
+                <button id="menu-toggle" class="icon-button"><i data-lucide="menu"></i></button>
+                <h2>Sugerencias de Hábitos</h2>
                 <div>
                     <button class="icon-button"><i data-lucide="bell"></i></button>
                     <button class="icon-button"><i data-lucide="settings"></i></button>
                     <a href="PerfilUsuario.html" class="icon-button"><i data-lucide="user"></i></a>
                 </div>
             </header>
+                
             <div class="calendar-container">
                 <div class="calendar-header">
                     <button id="prevMonth" aria-label="Mes anterior" class="btnCalendar">&lt;</button>
@@ -78,6 +80,12 @@
                         <div class="form-group">
                             <label for="eventRepeatDays">Días de repetición:</label>
                             <input type="number" id="eventRepeatDays" min="1" value="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="eventCategory">Categoría:</label>
+                            <select id="eventCategory">
+                                <option value="">Selecciona una categoría</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="eventReminder">

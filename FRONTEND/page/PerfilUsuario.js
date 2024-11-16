@@ -1,24 +1,29 @@
 document.addEventListener('DOMContentLoaded', function() {
+    lucide.createIcons();
+
     const editProfileBtn = document.getElementById('edit-profile-btn');
     const editProfileForm = document.getElementById('edit-profile-form');
     const profileForm = document.getElementById('profile-form');
     const cancelEditBtn = document.getElementById('cancel-edit');
     const userAvatar = document.getElementById('user-avatar');
     const editAvatar = document.getElementById('edit-avatar');
+    const userName = document.getElementById('user-name');
+    const userEmail = document.getElementById('user-email');
 
-    // Mostrar formulario de edición
+    loadUserData();
+    loadUserStats();
+
     editProfileBtn.addEventListener('click', function() {
         editProfileForm.style.display = 'block';
-        document.getElementById('edit-username').value = document.getElementById('user-name').textContent;
+        document.getElementById('edit-username').value = userName.textContent;
+        document.getElementById('edit-email').value = userEmail.textContent;
     });
 
-    // Ocultar formulario de edición
     cancelEditBtn.addEventListener('click', function() {
         editProfileForm.style.display = 'none';
         profileForm.reset();
     });
 
-    // Manejar cambio de avatar
     editAvatar.addEventListener('change', function(event) {
         const file = event.target.files[0];
         if (file) {
@@ -30,28 +35,118 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Manejar envío del formulario
     profileForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
         const username = document.getElementById('edit-username').value;
+        const email = document.getElementById('edit-email').value;
         const password = document.getElementById('edit-password').value;
         const confirmPassword = document.getElementById('edit-confirm-password').value;
 
-        // Validar contraseña
         if (password && password !== confirmPassword) {
-            alert('Las contraseñas no coinciden');
+            showNotification('Las contraseñas no coinciden', 'error');
             return;
         }
 
-        // Actualizar nombre de usuario
-        document.getElementById('user-name').textContent = username;
+        userName.textContent = username;
+        userEmail.textContent = email;
 
-        // Aquí puedes agregar la lógica para guardar los cambios en el servidor
-        // Por ahora, solo simularemos que se guardó correctamente
+        saveUserData({
+            name: username,
+            email: email,
+            avatar: userAvatar.src
+        });
 
-        alert('Perfil actualizado correctamente');
+        if (password) {
+            // Aquí se debería implementar la lógica para actualizar la contraseña de forma segura
+            console.log('Contraseña actualizada');
+        }
+
+        showNotification('Perfil actualizado correctamente', 'success');
         editProfileForm.style.display = 'none';
         profileForm.reset();
     });
 });
+
+function loadUserData() {
+    const userData = JSON.parse(localStorage.getItem('userData')) || {};
+    document.getElementById('user-name').textContent = userData.name || 'Nombre de Usuario';
+    document.getElementById('user-email').textContent = userData.email || 'usuario@ejemplo.com';
+    document.getElementById('user-avatar').src = userData.avatar || 'img/default-avatar.png';
+}
+
+function saveUserData(data) {
+    const currentData = JSON.parse(localStorage.getItem('userData')) || {};
+    const updatedData = { ...currentData, ...data };
+    localStorage.setItem('userData', JSON.stringify(updatedData));
+}
+
+function loadUserStats() {
+    const habits = JSON.parse(localStorage.getItem('habits')) || [];
+    const today = new Date().toDateString();
+
+    const activeHabits = habits.length;
+    const completedHabits = habits.filter(h => h.completed).length;
+    const currentStreak = calculateStreak(habits);
+    const bestStreak = calculateBestStreak(habits);
+
+    document.getElementById('active-habits').textContent = activeHabits;
+    document.getElementById('completed-habits').textContent = completedHabits;
+    document.getElementById('current-streak').textContent = currentStreak;
+    document.getElementById('best-streak').textContent = bestStreak;
+}
+
+function calculateStreak(habits) {
+    let streak = 0;
+    const today = new Date().setHours(0, 0, 0, 0);
+    
+    for (let i = 0; i < habits.length; i++) {
+        const habitDate = new Date(habits[i].lastCompletedDate).setHours(0, 0, 0, 0);
+        if (today - habitDate === streak * 86400000) {
+            streak++;
+        } else {
+            break;
+        }
+    }
+    
+    return streak;
+}
+
+function calculateBestStreak(habits) {
+    let bestStreak = 0;
+    let currentStreak = 0;
+    let lastDate = null;
+
+    habits.forEach(habit => {
+        if (habit.lastCompletedDate) {
+            const currentDate = new Date(habit.lastCompletedDate).setHours(0, 0, 0, 0);
+            if (lastDate && currentDate - lastDate === 86400000) {
+                currentStreak++;
+            } else {
+                currentStreak = 1;
+            }
+            lastDate = currentDate;
+            bestStreak = Math.max(bestStreak, currentStreak);
+        }
+    });
+
+    return bestStreak;
+}
+
+function showNotification(message, type) {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 10);
+
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 300);
+    }, 3000);
+}

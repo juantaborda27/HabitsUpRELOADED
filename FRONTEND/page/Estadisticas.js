@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Inicializar iconos de Lucide
     lucide.createIcons();
 
-    // Función para obtener datos reales de localStorage
     function getHabitsData() {
         const habits = JSON.parse(localStorage.getItem('habits')) || [];
         const today = new Date().toDateString();
@@ -24,14 +22,13 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
 
-    // Función para calcular la racha actual
     function calculateStreak(habits) {
         let streak = 0;
         const today = new Date().setHours(0, 0, 0, 0);
         
         for (let i = 0; i < habits.length; i++) {
             const habitDate = new Date(habits[i].lastCompletedDate).setHours(0, 0, 0, 0);
-            if (today - habitDate === streak * 86400000) { // 86400000 ms en un día
+            if (today - habitDate === streak * 86400000) {
                 streak++;
             } else {
                 break;
@@ -41,27 +38,38 @@ document.addEventListener('DOMContentLoaded', function() {
         return streak;
     }
 
-    // Función para calcular el tiempo total en modo focus
     function calculateFocusTime(habits) {
-        // Aquí deberías implementar la lógica real para calcular el tiempo en focus
-        // Por ahora, retornamos un valor de ejemplo
-        return 3.5;
+        return habits.reduce((total, habit) => total + (habit.focusTime || 0), 0);
     }
 
-    // Función para calcular el progreso semanal
     function calculateWeeklyProgress(habits) {
         const weekDays = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
         const progress = new Array(7).fill(0);
         const today = new Date();
         const oneWeekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
 
+        const completedHabitsByDay = {};
+
         habits.forEach(habit => {
-            const habitDate = new Date(habit.lastCompletedDate);
-            if (habitDate >= oneWeekAgo && habitDate <= today) {
-                const dayIndex = habitDate.getDay();
-                progress[dayIndex]++;
+            if (habit.lastCompletedDate) {
+                const habitDate = new Date(habit.lastCompletedDate);
+                if (habitDate >= oneWeekAgo && habitDate <= today) {
+                    const dateString = habitDate.toDateString();
+                    if (!completedHabitsByDay[dateString]) {
+                        completedHabitsByDay[dateString] = new Set();
+                    }
+                    completedHabitsByDay[dateString].add(habit.id);
+                }
             }
         });
+
+        for (let i = 6; i >= 0; i--) {
+            const date = new Date(today);
+            date.setDate(date.getDate() - i);
+            const dateString = date.toDateString();
+            const completedHabits = completedHabitsByDay[dateString] || new Set();
+            progress[6 - i] = completedHabits.size;
+        }
 
         return weekDays.map((day, index) => ({
             x: day,
@@ -69,30 +77,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }));
     }
 
-    // Función para calcular la distribución de hábitos basada en días consecutivos
     function calculateHabitsDistribution(habits) {
-        // Ordenar hábitos por días consecutivos (streak) de mayor a menor
-        const sortedHabits = habits.sort((a, b) => b.streak - a.streak);
-        
-        // Tomar los top 5 hábitos o menos si hay menos de 5
+        const sortedHabits = habits.sort((a, b) => (b.streak || 0) - (a.streak || 0));
         const topHabits = sortedHabits.slice(0, 5);
         
         return topHabits.map(habit => ({
             x: habit.name,
-            y: habit.streak
+            y: habit.streak || 0
         }));
     }
 
-    // Obtener datos reales
     const habitsData = getHabitsData();
 
-    // Actualizar estadísticas de resumen
     document.getElementById('total-habits').textContent = habitsData.totalHabits;
     document.getElementById('completed-habits').textContent = habitsData.completedToday;
     document.getElementById('current-streak').textContent = habitsData.currentStreak;
-    document.getElementById('focus-time').textContent = habitsData.focusTime + 'h';
+    document.getElementById('focus-time').textContent = (habitsData.focusTime / 60).toFixed(1) + 'h';
 
-    // Gráfico de Progreso Semanal
     const weeklyProgressOptions = {
         series: [{
             name: 'Hábitos Completados',
@@ -154,7 +155,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     fontSize: '14px',
                     fontWeight: 600
                 }
-            }
+            },
+            reversed: true
         },
         yaxis: {
             title: {
@@ -174,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         tooltip: {
             x: {
-                format: 'dd/MM/yy HH:mm'
+                format: 'dd/MM/yy'
             },
         },
         markers: {
@@ -210,7 +212,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const weeklyProgressChart = new ApexCharts(document.querySelector("#weekly-progress-chart"), weeklyProgressOptions);
     weeklyProgressChart.render();
 
-    // Gráfico de Distribución de Hábitos (sin cambios)
     const habitsDistributionOptions = {
         series: habitsData.habitsDistribution.map(item => item.y),
         chart: {
@@ -235,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
         tooltip: {
             y: {
                 formatter: function(value) {
-                    return value + " días consecutivos";
+                    return value + " días de racha";
                 }
             }
         },
@@ -248,7 +249,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         },
         title: {
-            text: 'Top Hábitos por Días Consecutivos',
+            text: 'Top Hábitos por Días de Racha',
             align: 'center',
             style: {
                 fontSize: '24px',
@@ -280,7 +281,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const habitsDistributionChart = new ApexCharts(document.querySelector("#habits-distribution-chart"), habitsDistributionOptions);
     habitsDistributionChart.render();
 
-    // Toggle sidebar en móviles
     const menuToggle = document.getElementById('menu-toggle');
     const sidebar = document.querySelector('.sidebar');
     menuToggle.addEventListener('click', function() {

@@ -12,7 +12,7 @@
     <div class="app-container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <center><img src="../page/img/LOGO.png" alt="" width="60" height="40"></center>
+                <center><img src="../page/img/LOGO.png" alt="Logo" width="60" height="40"></center>
             </div>
             <nav>
                 <a href="MisHabitos.html"><i data-lucide="home"></i> Mis Hábitos</a>
@@ -37,7 +37,7 @@
             </header>
             <div class="content">
                 <div class="user-profile">
-                    <img src="img/default-avatar.png" alt="Avatar de usuario" class="user-avatar">
+                    <img src="img/default-avatar.png" alt="Avatar de usuario" id="user-avatar" class="user-avatar">
                     <h3 id="user-name">Nombre de Usuario</h3>
                     <p id="user-email">usuario@ejemplo.com</p>
                     <button class="primary-button" id="edit-profile-btn">Editar Perfil</button>
@@ -51,33 +51,38 @@
                         <li>Mejor Racha: <span id="best-streak">0</span> días</li>
                     </ul>
                 </div>
+                
+                <div id="edit-profile-form" class="edit-profile-form" style="display: none;">
+                    <h3>Editar Perfil</h3>
+                    <form id="profile-form">
+                        <div class="form-group">
+                            <label for="edit-username">Nombre de Usuario</label>
+                            <input type="text" id="edit-username" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-email">Email</label>
+                            <input type="email" id="edit-email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-password">Nueva Contraseña</label>
+                            <input type="password" id="edit-password" name="password">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-confirm-password">Confirmar Nueva Contraseña</label>
+                            <input type="password" id="edit-confirm-password" name="confirm-password">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-avatar">Foto de Perfil</label>
+                            <input type="file" id="edit-avatar" name="avatar" accept="image/*">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="primary-button">Guardar Cambios</button>
+                            <button type="button" id="cancel-edit" class="secondary-button">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </main>
-    </div>
-    <div id="edit-profile-form" class="edit-profile-form" style="display: none;">
-        <h3>Editar Perfil</h3>
-        <form id="profile-form">
-            <div class="form-group">
-                <label for="edit-username">Nombre de Usuario</label>
-                <input type="text" id="edit-username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="edit-password">Nueva Contraseña</label>
-                <input type="password" id="edit-password" name="password">
-            </div>
-            <div class="form-group">
-                <label for="edit-confirm-password">Confirmar Nueva Contraseña</label>
-                <input type="password" id="edit-confirm-password" name="confirm-password">
-            </div>
-            <div class="form-group">
-                <label for="edit-avatar">Foto de Perfil</label>
-                <input type="file" id="edit-avatar" name="avatar" accept="image/*">
-            </div>
-            <div class="form-actions">
-                <button type="submit" class="primary-button">Guardar Cambios</button>
-                <button type="button" id="cancel-edit" class="secondary-button">Cancelar</button>
-            </div>
-        </form>
     </div>
 
     <script src="PerfilUsuario.js"></script>
