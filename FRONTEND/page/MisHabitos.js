@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         habits = JSON.parse(localStorage.getItem('habits')) || [];
         renderHabits();
         scheduleReminders();
+        inicializarContador();
     }
 
     function saveHabits() {
@@ -30,16 +31,17 @@ document.addEventListener('DOMContentLoaded', function() {
         habits.forEach(habit => {
             const habitCard = document.createElement('div');
             habitCard.className = 'habit-card';
+            const progress = (habit.streak / habit.repeatDays) * 100;
             habitCard.innerHTML = `
                 <h3>${habit.name}</h3>
                 <p>${habit.description}</p>
                 <div class="habit-details">
                     <span>Hora: ${habit.time}</span>
-                    <span>Racha: ${habit.streak} días</span>
+                    <span>Racha: ${habit.streak}/${habit.repeatDays} días</span>
                     <span>Creado: ${new Date(habit.fechaCreacion).toLocaleDateString('es-ES')}</span>
                 </div>
                 <div class="habit-progress">
-                    <div class="habit-progress-bar" style="width: ${habit.progress}%"></div>
+                    <div class="habit-progress-bar" style="width: ${progress}%"></div>
                 </div>
                 <div class="habit-actions">
                     <button class="primary-button complete-habit" data-id="${habit.id}">Completar</button>
@@ -93,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('habit-description').value = habit.description;
             document.getElementById('habit-frequency').value = habit.frequency;
             document.getElementById('habit-time').value = habit.time;
-            document.getElementById('habit-deadline').value = habit.deadline;
+            document.getElementById('habit-repeat-days').value = habit.repeatDays || 1;
             document.getElementById('habit-reminder').checked = habit.reminder;
             editingHabitId = id;
             showModal('Editar Hábito');
@@ -116,62 +118,45 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
     
-            // Incrementar el contador total de hábitos completados
             let totalHabitosCompletados = parseInt(localStorage.getItem('totalHabitosCompletados') || '0');
             totalHabitosCompletados++;
             localStorage.setItem('totalHabitosCompletados', totalHabitosCompletados);
     
             habit.streak += 1;
-            habit.progress = Math.min(100, habit.progress + 10);
+            habit.progress = Math.min(100, (habit.streak / habit.repeatDays) * 100);
             habit.lastCompletedDate = today;
             
-            const deadline = new Date(habit.deadline);
-            if (new Date() <= deadline) {
+            if (habit.streak >= habit.repeatDays) {
                 habit.completed = true;
-                showNotification(`¡Felicidades! Has completado el hábito "${habit.name}" antes de la fecha límite.`);
+                showNotification(`¡Felicidades! Has completado el hábito "${habit.name}" durante ${habit.repeatDays} días.`);
             }
             
             saveHabits();
             renderHabits();
-            showNotification(`¡Hábito "${habit.name}" completado! Racha: ${habit.streak} días`);
+            showNotification(`¡Hábito "${habit.name}" completado! Racha: ${habit.streak}/${habit.repeatDays} días`);
     
-            // Emitir evento de hábito completado con el total actualizado
             const habitoCompletadoEvent = new CustomEvent('habitoCompletado', {
                 detail: { totalCompletados: totalHabitosCompletados }
             });
             window.dispatchEvent(habitoCompletadoEvent);
     
-            // Actualizar el contador en la interfaz si existe
             const contadorElement = document.getElementById('habits-completed');
             if (contadorElement) {
                 contadorElement.textContent = totalHabitosCompletados;
             }
     
-            // Depuración
             console.log('Total hábitos completados:', totalHabitosCompletados);
             console.log('Elemento en la interfaz:', contadorElement);
         }
     }
     
-    
-    // Añadir al inicio del archivo, después de DOMContentLoaded
     function inicializarContador() {
-        // Recuperar el total de hábitos completados del localStorage
         const totalHabitosCompletados = localStorage.getItem('totalHabitosCompletados') || '0';
         
-        // Actualizar el contador en la interfaz si existe
         const contadorElement = document.getElementById('habits-completed');
         if (contadorElement) {
             contadorElement.textContent = totalHabitosCompletados;
         }
-    }
-    
-    // Añadir la llamada a inicializarContador al final de loadHabits
-    function loadHabits() {
-        habits = JSON.parse(localStorage.getItem('habits')) || [];
-        renderHabits();
-        scheduleReminders();
-        inicializarContador(); // Añadir esta línea
     }
 
     habitForm.addEventListener('submit', function(e) {
@@ -181,13 +166,13 @@ document.addEventListener('DOMContentLoaded', function() {
             description: document.getElementById('habit-description').value,
             frequency: document.getElementById('habit-frequency').value,
             time: document.getElementById('habit-time').value,
-            deadline: document.getElementById('habit-deadline').value,
+            repeatDays: parseInt(document.getElementById('habit-repeat-days').value),
             reminder: document.getElementById('habit-reminder').checked,
             streak: 0,
             progress: 0,
             completed: false,
             lastCompletedDate: null,
-            fechaCreacion: new Date().toISOString() // Añadimos la fecha de creación
+            fechaCreacion: new Date().toISOString()
         };
 
         if (editingHabitId) {
@@ -248,7 +233,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         setTimeout(() => {
             notification.remove();
-        }, 10000); // La notificación desaparecerá después de 10 segundos
+        }, 10000);
     }
 
     const menuToggle = document.getElementById('menu-toggle');
@@ -257,10 +242,49 @@ document.addEventListener('DOMContentLoaded', function() {
         sidebar.classList.toggle('show-sidebar');
     });
 
-    loadHabits();
 
+    function checkUncompletedHabits() {
+        const today = new Date().toDateString();
+        const uncompletedHabits = habits.filter(habit => 
+            habit.lastCompletedDate !== today && 
+            (habit.frequency === 'daily' || 
+             (habit.frequency === 'weekly' && new Date().getDay() === 0) ||
+             (habit.frequency === 'monthly' && new Date().getDate() === 1))
+        );
     
+        if (uncompletedHabits.length > 0) {
+            showUncompletedHabitsNotification(uncompletedHabits);
+        }
+    }
 
+    function showUncompletedHabitsNotification(uncompletedHabits) {
+        const message = `No has completado ${uncompletedHabits.length} hábito(s) hoy: ${uncompletedHabits.map(h => h.name).join(', ')}`;
+        showNotification(message, 10000); // Mostrar por 10 segundos
+    }
+
+    function showNotification(message, duration = 3000) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.style.display = 'block';
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, duration);
+    }
+
+    function scheduleUncompletedHabitsCheck() {
+        const now = new Date();
+        const endOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
+        const timeUntilEndOfDay = endOfDay - now;
+    
+        setTimeout(() => {
+            checkUncompletedHabits();
+            // Programar la próxima verificación para el día siguiente
+            scheduleUncompletedHabitsCheck();
+        }, timeUntilEndOfDay);
+    }
+
+    loadHabits();
+    scheduleUncompletedHabitsCheck();
 
 
 });

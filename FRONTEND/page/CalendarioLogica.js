@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const eventTimeInput = document.getElementById('eventTime');
     const eventFrequencyInput = document.getElementById('eventFrequency');
     const eventReminderInput = document.getElementById('eventReminder');
+    const eventRepeatDaysInput = document.getElementById('eventRepeatDays');
     const saveButton = document.getElementById('saveButton');
     const deleteButton = document.getElementById('deleteButton');
     const prevMonthBtn = document.getElementById('prevMonth');
@@ -123,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function(){
         eventTimeInput.value = event.time || '';
         eventFrequencyInput.value = event.frequency || 'once';
         eventReminderInput.checked = event.reminder || false;
+        eventRepeatDaysInput.value = event.repeatDays || 1;
         eventForm.style.display = 'block';
         addEventButton.style.display = 'none';
         deleteButton.style.display = 'block';
@@ -148,7 +150,54 @@ document.addEventListener('DOMContentLoaded', function(){
 
     eventForm.onsubmit = function(e) {
         e.preventDefault();
-        saveButton.onclick(e);
+    }
+
+    function saveEvent(date, title, description, time, frequency, reminder, repeatDays) {
+        if (!events[date]) {
+            events[date] = [];
+        }
+
+        const newEvent = { title, description, time, frequency, reminder, repeatDays };
+        events[date].push(newEvent);
+
+        localStorage.setItem('calendarEvents', JSON.stringify(events));
+
+        updateCalendar();
+        updateEventList(date);
+    }
+
+    function syncCalendarWithHabits() {
+        let habits = JSON.parse(localStorage.getItem('habits')) || [];
+        const calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || {};
+
+        // Crear un mapa de hábitos existentes por nombre para una búsqueda rápida
+        const habitMap = new Map(habits.map(habit => [habit.name, habit]));
+
+        // Iterar sobre todos los eventos del calendario
+        Object.values(calendarEvents).flat().forEach(event => {
+            if (!habitMap.has(event.title)) {
+                // Si el hábito no existe, créalo
+                const newHabit = {
+                    id: Date.now() + Math.random(), // Asegura un ID único
+                    name: event.title,
+                    description: event.description,
+                    time: event.time,
+                    frequency: event.frequency,
+                    reminder: event.reminder,
+                    repeatDays: event.repeatDays,
+                    streak: 0,
+                    progress: 0,
+                    completed: false,
+                    lastCompletedDate: null,
+                    fechaCreacion: new Date().toISOString()
+                };
+                habits.push(newHabit);
+                habitMap.set(event.title, newHabit);
+            }
+        });
+
+        // Guardar los hábitos actualizados
+        localStorage.setItem('habits', JSON.stringify(habits));
     }
 
     saveButton.addEventListener('click', function(e) {
@@ -159,28 +208,24 @@ document.addEventListener('DOMContentLoaded', function(){
         const time = eventTimeInput.value;
         const frequency = eventFrequencyInput.value;
         const reminder = eventReminderInput.checked;
+        const repeatDays = parseInt(eventRepeatDaysInput.value);
         const id = eventIdInput.value;
-    
-        if (!events[date]) {
-            events[date] = [];
-        }
-    
-        const newEvent = { title, description, time, frequency, reminder };
-    
+
         if (id === '') {
-            events[date].push(newEvent);
+            saveEvent(date, title, description, time, frequency, reminder, repeatDays);
         } else {
-            events[date][parseInt(id)] = newEvent;
+            // Actualizar evento existente
+            events[date][parseInt(id)] = { title, description, time, frequency, reminder, repeatDays };
+            localStorage.setItem('calendarEvents', JSON.stringify(events));
+            updateCalendar();
+            updateEventList(date);
         }
-    
-        localStorage.setItem('calendarEvents', JSON.stringify(events));
-        updateCalendar();
-        updateEventList(date);
+
+        syncCalendarWithHabits(); // Sincronizar después de guardar o actualizar
+
         modal.style.display = 'none';
-    
-        console.log('Evento guardado:', newEvent); // Para verificar el guardado
+        console.log('Evento guardado:', { title, description, time, frequency, reminder, repeatDays });
     });
-    
 
     deleteButton.onclick = function() {
         const date = eventDateInput.value;
@@ -192,6 +237,7 @@ document.addEventListener('DOMContentLoaded', function(){
         localStorage.setItem('calendarEvents', JSON.stringify(events));
         updateCalendar();
         updateEventList(date);
+        modal.style.display = 'none';
     }
 
     prevMonthBtn.onclick = function() {
@@ -213,65 +259,4 @@ document.addEventListener('DOMContentLoaded', function(){
             sidebar.classList.toggle('show-sidebar');
         });
     }
-
-    function saveEvent(date, title, description, time, frequency, reminder) {
-        if (!events[date]) {
-            events[date] = [];
-        }
-
-        const newEvent = { title, description, time, frequency, reminder };
-        events[date].push(newEvent);
-
-        localStorage.setItem('calendarEvents', JSON.stringify(events));
-
-        // Agregar el evento como un hábito en MisHabitos
-        addEventToHabits(newEvent);
-
-        updateCalendar();
-        updateEventList(date);
-    }
-
-    function addEventToHabits(event) {
-        let habits = JSON.parse(localStorage.getItem('habits')) || [];
-        const newHabit = {
-            id: Date.now(),
-            name: event.title,
-            description: event.description,
-            time: event.time,
-            frequency: event.frequency,
-            reminder: event.reminder,
-            streak: 0,
-            progress: 0,
-            completed: false,
-            lastCompletedDate: null,
-            fechaCreacion: new Date().toISOString()
-        };
-        habits.push(newHabit);
-        localStorage.setItem('habits', JSON.stringify(habits));
-    }
-
-    saveButton.addEventListener('click', function(e) {
-        e.preventDefault();
-        const date = eventDateInput.value;
-        const title = eventTitleInput.value;
-        const description = eventDescriptionInput.value;
-        const time = eventTimeInput.value;
-        const frequency = eventFrequencyInput.value;
-        const reminder = eventReminderInput.checked;
-        const id = eventIdInput.value;
-
-        if (id === '') {
-            saveEvent(date, title, description, time, frequency, reminder);
-        } else {
-            // Actualizar evento existente
-            events[date][parseInt(id)] = { title, description, time, frequency, reminder };
-            localStorage.setItem('calendarEvents', JSON.stringify(events));
-            updateCalendar();
-            updateEventList(date);
-        }
-
-        modal.style.display = 'none';
-        console.log('Evento guardado:', { title, description, time, frequency, reminder });
-    });
-    
 });
