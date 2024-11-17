@@ -124,6 +124,7 @@ header {
 .calendar-header {
     display: flex;
     justify-content: space-between;
+    letter-spacing: 0.7em;
     align-items: center;
     margin-bottom: 20px;
 }
@@ -218,12 +219,12 @@ header {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-    padding: 5px;
+    padding: 2.5em;
     overflow: hidden;
 }
 
 .day:hover {
-    background-color: #d4d4d4;
+    background-color: #bda6cf;
 }
 
 .day.has-event {

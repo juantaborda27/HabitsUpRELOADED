@@ -81,6 +81,16 @@ header {
     border-bottom: 1px solid var(--border-color);
 }
 
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); */
+    font-style: NONE;
+    color: var(--primary-color);
+    font-family: "Bebas Neue", sans-serif;
+}
+
+
 .icon-button {
     background: none;
     border: none;
@@ -312,3 +322,36 @@ header {
         font-size: 1.2rem;
     }
 }
+
+#imgMsg{
+    width: 200px;
+    height: 200px;
+}
+
+
+#pMsg {
+    font-size: 2rem; /* Similar a text-4xl */
+    font-weight: bold; /* Similar a font-bold */
+    letter-spacing: -0.1em; /* Similar a -tracking-widest */
+    color:#3A1078; /* Similar a text-black */
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+    #pMsg {
+      color:#3A1078; /* Similar a dark:text-white */
+    }
+  }
+  
+  @media (min-width: 768px) { /* Similar a md:text-7xl y md:leading-[5rem] */
+    #pMsg {
+      font-size: 2rem;
+      line-height: 5rem;
+    }
+  }
+  
+  .motivation-content:hover #pMsg {
+    transform: rotateX(360deg); /* Flip efecto */
+    color: #00408a; /* Color de ejemplo al pasar el mouse */
+  }
+  

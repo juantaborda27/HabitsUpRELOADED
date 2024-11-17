@@ -27,6 +27,19 @@ document.addEventListener('DOMContentLoaded', function() {
         "Los grandes cambios vienen de pequeños hábitos diarios.",
         "Eres capaz de hacer cosas increíbles. ¡Confía en ti y sigue adelante!"
     ];
+
+    const gifMotivavionales =[
+        "https://i0.wp.com/www.printmag.com/wp-content/uploads/2021/02/4cbe8d_f1ed2800a49649848102c68fc5a66e53mv2.gif?fit=476%2C280&ssl=1",
+        "https://mir-s3-cdn-cf.behance.net/project_modules/hd/5eeea355389655.59822ff824b72.gif",
+        "https://i.gifer.com/XOsX.gif",
+        "https://media.idownloadblog.com/wp-content/uploads/2016/11/Animated-GIF-Banana.gif",
+        "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmRpYnNucXVxa2x3Ym9yZWNlZ3VqaTExcW1zeTQxbXV3c3VjajUycSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/jwxMFMf74yjaXX3AD9/giphy.webp",
+        "https://media.tenor.com/Jloq3y4mk8kAAAAj/amor-love.gif",
+        "https://i.giphy.com/y4PQTcLTYJwOI.webp",
+        "https://i0.wp.com/media1.giphy.com/media/QUOs7hGpn6PS/giphy.gif"
+    ]
+
+
     
 
     function updateStreak() {
@@ -99,13 +112,18 @@ document.addEventListener('DOMContentLoaded', function() {
         return mensajesMotivacionales[Math.floor(Math.random() * mensajesMotivacionales.length)];
     }
 
+    function getRandomGIF() {
+        return gifMotivavionales[Math.floor(Math.random() * gifMotivavionales.length)];
+    }
+
+
     function showDailyMotivation() {
         const motivationElement = document.createElement('div');
         motivationElement.className = 'daily-motivation';
         motivationElement.innerHTML = `
             <div class="motivation-content">
-                <h2>Mensaje del día</h2>
-                <p>${getRandomMotivationalMessage()}</p>
+                <p id="pMsg">${getRandomMotivationalMessage()}</p>
+                <img src="${getRandomGIF()}" id="imgMsg"/>
             </div>
         `;
         document.querySelector('.container').prepend(motivationElement);

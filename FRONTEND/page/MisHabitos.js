@@ -10,19 +10,24 @@ document.addEventListener('DOMContentLoaded', function() {
     const cancelDeleteBtn = document.getElementById('cancel-delete');
     const confirmDeleteBtn = document.getElementById('confirm-delete');
 
+    const categorias = ['Salud', 'Productividad', 'Ejercicio', 'Salud Mental', 'Autocuidado', 'Relaciones Sociales', 'Sueño'];
+
     let habits = [];
     let editingHabitId = null;
     let deletingHabitId = null;
 
     function loadHabits() {
         habits = JSON.parse(localStorage.getItem('habits')) || [];
+        console.log('Hábitos cargados:', habits);
         renderHabits();
         scheduleReminders();
         inicializarContador();
+        populateCategorySelect();
     }
 
     function saveHabits() {
         localStorage.setItem('habits', JSON.stringify(habits));
+        console.log('Hábitos guardados:', habits);
         scheduleReminders();
     }
 
@@ -36,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <h3>${habit.name}</h3>
                 <p>${habit.description}</p>
                 <div class="habit-details">
+                    <span>Categoría: ${habit.category || 'Null'}</span>
                     <span>Hora: ${habit.time}</span>
                     <span>Racha: ${habit.streak}/${habit.repeatDays} días</span>
                     <span>Creado: ${new Date(habit.fechaCreacion).toLocaleDateString('es-ES')}</span>
@@ -64,6 +70,17 @@ document.addEventListener('DOMContentLoaded', function() {
         lucide.createIcons();
     }
 
+    function populateCategorySelect() {
+        const categorySelect = document.getElementById('habit-category');
+        categorySelect.innerHTML = '<option value="">Selecciona una categoría</option>';
+        categorias.forEach(categoria => {
+            const option = document.createElement('option');
+            option.value = categoria;
+            option.textContent = categoria;
+            categorySelect.appendChild(option);
+        });
+    }
+
     function showModal(title) {
         document.getElementById('modal-title').textContent = title;
         modal.style.display = 'block';
@@ -86,6 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     newHabitBtn.addEventListener('click', () => {
         showModal('Crear Nuevo Hábito');
+        populateCategorySelect();
     });
 
     function editHabit(id) {
@@ -97,6 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('habit-time').value = habit.time;
             document.getElementById('habit-repeat-days').value = habit.repeatDays || 1;
             document.getElementById('habit-reminder').checked = habit.reminder;
+            document.getElementById('habit-category').value = habit.category || '';
             editingHabitId = id;
             showModal('Editar Hábito');
         }
@@ -168,6 +187,7 @@ document.addEventListener('DOMContentLoaded', function() {
             time: document.getElementById('habit-time').value,
             repeatDays: parseInt(document.getElementById('habit-repeat-days').value),
             reminder: document.getElementById('habit-reminder').checked,
+            category: document.getElementById('habit-category').value,
             streak: 0,
             progress: 0,
             completed: false,
@@ -242,7 +262,6 @@ document.addEventListener('DOMContentLoaded', function() {
         sidebar.classList.toggle('show-sidebar');
     });
 
-
     function checkUncompletedHabits() {
         const today = new Date().toDateString();
         const uncompletedHabits = habits.filter(habit => 
@@ -262,15 +281,6 @@ document.addEventListener('DOMContentLoaded', function() {
         showNotification(message, 10000); // Mostrar por 10 segundos
     }
 
-    function showNotification(message, duration = 3000) {
-        const notification = document.getElementById('notification');
-        notification.textContent = message;
-        notification.style.display = 'block';
-        setTimeout(() => {
-            notification.style.display = 'none';
-        }, duration);
-    }
-
     function scheduleUncompletedHabitsCheck() {
         const now = new Date();
         const endOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
@@ -285,6 +295,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     loadHabits();
     scheduleUncompletedHabitsCheck();
-
-
 });
+
+// Ejecuta este código en la consola para ver los hábitos actuales
+console.log('Hábitos actuales:', JSON.parse(localStorage.getItem('habits')));

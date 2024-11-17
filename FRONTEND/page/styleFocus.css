@@ -126,11 +126,15 @@ section {
     padding: 3rem;
     text-align: center;
 }
-
-h1 {
-    color: var(--text-color);
-    margin-bottom: 2rem;
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); */
+    font-style: NONE;
+    color: var(--primary-color);
+    font-family: "Bebas Neue", sans-serif;
 }
+
 
 .painel {
     display: flex;

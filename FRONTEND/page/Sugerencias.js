@@ -16,7 +16,22 @@ document.addEventListener('DOMContentLoaded', function() {
         { name: "Agradecer", description: "Escribir 3 cosas por las que estoy agradecido", time: "22:00", frequency: "daily", reminder: true, category: "Salud mental", fechaCreacion: new Date().toISOString()},
         { name: "Aprender", description: "Ver un video educativo", time: "12:00", frequency: "daily", reminder: true, category: "Productividad", fechaCreacion: new Date().toISOString() },
         { name: "Dormir Bien", description: "Acostarse temprano para dormir 8 horas", time: "22:30", frequency: "daily", reminder: true, category: "Sueño", fechaCreacion: new Date().toISOString()},
-        { name: "Organizar Espacio", description: "Ordenar el escritorio al final del día", time: "18:00", frequency: "daily", reminder: true, category: "Autocuidado", fechaCreacion: new Date().toISOString()}
+        { name: "Organizar Espacio", description: "Ordenar el escritorio al final del día", time: "18:00", frequency: "daily", reminder: true, category: "Autocuidado", fechaCreacion: new Date().toISOString()},
+        { name: "Hacer Yoga", description: "Realizar 20 minutos de yoga", time: "06:00", frequency: "daily", reminder: true, category: "Ejercicio", fechaCreacion: new Date().toISOString() },
+        { name: "Cuidar Plantas", description: "Regar y cuidar las plantas", time: "09:00", frequency: "daily", reminder: true, category: "Autocuidado", fechaCreacion: new Date().toISOString() },
+        { name: "Estudiar Programación", description: "Practicar algoritmos durante 1 hora", time: "16:00", frequency: "daily", reminder: true, category: "Educación", fechaCreacion: new Date().toISOString() },
+        { name: "Cocinar Saludable", description: "Preparar una comida balanceada", time: "13:00", frequency: "daily", reminder: true, category: "Salud", fechaCreacion: new Date().toISOString() },
+        { name: "Practicar Instrumento", description: "Tocar un instrumento musical durante 30 minutos", time: "17:30", frequency: "daily", reminder: true, category: "Creatividad", fechaCreacion: new Date().toISOString() },
+        { name: "Aprender algo nuevo", description: "Investigar un tema desconocido", time: "14:00", frequency: "daily", reminder: true, category: "Educación", fechaCreacion: new Date().toISOString() },
+        { name: "Practicar Respeto", description: "Dar un elogio sincero a alguien", time: "12:30", frequency: "daily", reminder: true, category: "Relaciones", fechaCreacion: new Date().toISOString() },
+        { name: "Evitar Redes Sociales", description: "Estar 1 hora sin redes sociales", time: "19:30", frequency: "daily", reminder: true, category: "Productividad", fechaCreacion: new Date().toISOString() },
+        { name: "Practicar Mindfulness", description: "Conciencia plena durante 10 minutos", time: "08:15", frequency: "daily", reminder: true, category: "Salud mental", fechaCreacion: new Date().toISOString() },
+        { name: "Limpiar", description: "Hacer una limpieza rápida del hogar", time: "20:30", frequency: "daily", reminder: true, category: "Autocuidado", fechaCreacion: new Date().toISOString() },
+        { name: "Técnica Pomodoro", description: "Usar la técnica Pomodoro durante el trabajo", time: "10:00", frequency: "daily", reminder: true, category: "Productividad", fechaCreacion: new Date().toISOString() },
+        { name: "Caminar descalzo", description: "Caminar descalzo para estimular los pies", time: "07:30", frequency: "daily", reminder: true, category: "Salud", fechaCreacion: new Date().toISOString() },
+        { name: "Agradecer al final del día", description: "Reflexionar sobre las cosas positivas del día", time: "23:00", frequency: "daily", reminder: true, category: "Salud mental", fechaCreacion: new Date().toISOString() },
+        { name: "Revisar Finanzas", description: "Checar ingresos y gastos diarios", time: "21:30", frequency: "daily", reminder: true, category: "Finanzas", fechaCreacion: new Date().toISOString() },
+        { name: "Escuchar Música", description: "Escuchar música relajante durante 15 minutos", time: "18:45", frequency: "daily", reminder: true, category: "Relajación", fechaCreacion: new Date().toISOString() }
     ];
 
     let currentFilter = 'Todas';
