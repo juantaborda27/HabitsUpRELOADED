@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let isWorkTime = true;
     let timer;
     let activityName = "Actividad sin nombre";
+    let totalFocusTime = parseInt(localStorage.getItem('totalFocusTime')) || 0;
 
     const minutesElement = document.getElementById('minutes');
     const secondsElement = document.getElementById('seconds');
@@ -25,11 +26,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const promptAcceptButton = document.getElementById('prompt-accept');
     const promptCancelButton = document.getElementById('prompt-cancel');
 
-    // Crear el elemento de audio para la alarma
     const alarmSound = new Audio('alarm-clock-short-6402.mp3');
-    
-    // Precargar el sonido
     alarmSound.load();
+
+    const alertaPersonalizada = document.getElementById('alerta-personalizada');
+    const botonPermanecer = document.getElementById('boton-permanecer');
+    const botonSalir = document.getElementById('boton-salir');
 
     function updateDisplay() {
         minutesElement.textContent = minutes.toString().padStart(2, '0');
@@ -46,9 +48,14 @@ document.addEventListener('DOMContentLoaded', function() {
             startButton.innerHTML = '<i class="fa-solid fa-pause"></i>';
         }
         isRunning = !isRunning;
+        updateBeforeUnloadEvent();
     }
 
     function updateTimer() {
+        if (isWorkTime && isRunning) {
+            totalFocusTime++;
+        }
+
         if (seconds > 0) {
             seconds--;
         } else if (minutes > 0) {
@@ -73,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
             startButton.innerHTML = '<i class="fa-solid fa-play"></i>';
         }
         updateDisplay();
+        saveTotalFocusTime();
     }
 
     function resetTimer() {
@@ -85,6 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
         startButton.innerHTML = '<i class="fa-solid fa-play"></i>';
         workElement.classList.add('active');
         breakElement.classList.remove('active');
+        updateBeforeUnloadEvent();
     }
 
     function showConfigPrompt() {
@@ -137,12 +146,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (permission === "granted") {
                     new Notification("Temporizador finalizado", {
                         body: message,
-                        icon: "path/to/your/icon.png" // Reemplaza con la ruta a tu icono
+                        icon: "path/to/your/icon.png"
                     });
                 }
             });
         }
-        // Mostrar notificación en la interfaz
         const notification = document.createElement('div');
         notification.className = 'custom-notification';
         notification.innerHTML = `
@@ -154,13 +162,51 @@ document.addEventListener('DOMContentLoaded', function() {
 
         notification.querySelector('.close-notification').addEventListener('click', () => {
             notification.remove();
-            alarmSound.pause(); // Detiene el sonido cuando se cierra la notificación
+            alarmSound.pause();
         });
 
         setTimeout(() => {
             notification.remove();
-            alarmSound.pause(); // Detiene el sonido después de 5 segundos
+            alarmSound.pause();
         }, 5000);
+    }
+
+    function saveTotalFocusTime() {
+        localStorage.setItem('totalFocusTime', totalFocusTime);
+    }
+
+    function mostrarAlertaPersonalizada(callback) {
+        alertaPersonalizada.style.display = 'flex';
+        
+        botonPermanecer.onclick = function() {
+            alertaPersonalizada.style.display = 'none';
+            callback(false);
+        };
+
+        botonSalir.onclick = function() {
+            alertaPersonalizada.style.display = 'none';
+            callback(true);
+        };
+    }
+
+    function updateBeforeUnloadEvent() {
+        if (isRunning) {
+            window.addEventListener('beforeunload', mostrarPromptSalida);
+        } else {
+            window.removeEventListener('beforeunload', mostrarPromptSalida);
+        }
+    }
+
+    function mostrarPromptSalida(event) {
+        event.preventDefault();
+        event.returnValue = '';
+        mostrarAlertaPersonalizada(function(debeSalir) {
+            if (debeSalir) {
+                resetTimer();
+            } else {
+                event.preventDefault();
+            }
+        });
     }
 
     startButton.addEventListener('click', toggleStartPause);
@@ -177,6 +223,37 @@ document.addEventListener('DOMContentLoaded', function() {
         sidebar.classList.toggle('show-sidebar');
     });
 
+    // Modificar el evento para los enlaces de navegación
+    const navLinks = document.querySelectorAll('.sidebar a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            if (isRunning) {
+                e.preventDefault();
+                mostrarAlertaPersonalizada(function(debeSalir) {
+                    if (debeSalir) {
+                        resetTimer();
+                        window.location.href = e.target.href;
+                    }
+                });
+            }
+        });
+    });
+
+    function loadProfilePicture() {
+        const profilePicture = localStorage.getItem('profilePicture');
+        const profilePictureElement = document.getElementById('profile-picture');
+        if (profilePicture && profilePictureElement) {
+            profilePictureElement.src = profilePicture;
+        } else if (profilePictureElement) {
+            profilePictureElement.src = 'path/to/default-profile-picture.jpg';
+        }
+    }
+
     updateDisplay();
     workElement.classList.add('active');
+
+    window.addEventListener('beforeunload', saveTotalFocusTime);
+
+    loadProfilePicture();
+
 });

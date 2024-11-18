@@ -137,6 +137,17 @@ document.addEventListener('DOMContentLoaded', function() {
         sidebar.classList.toggle('show-sidebar');
     });
 
+    function loadProfilePicture() {
+        const profilePicture = localStorage.getItem('profilePicture');
+        const profilePictureElement = document.getElementById('profile-picture');
+        if (profilePicture && profilePictureElement) {
+            profilePictureElement.src = profilePicture;
+        } else if (profilePictureElement) {
+            profilePictureElement.src = 'path/to/default-profile-picture.jpg';
+        }
+    }
+
+    loadProfilePicture();
     setupCategoryFilters();
     renderSuggestions();
 });

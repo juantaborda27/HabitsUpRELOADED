@@ -38,8 +38,11 @@ document.addEventListener('DOMContentLoaded', function() {
         return streak;
     }
 
-    function calculateFocusTime(habits) {
-        return habits.reduce((total, habit) => total + (habit.focusTime || 0), 0);
+    function calculateFocusTime() {
+        const totalFocusTime = parseInt(localStorage.getItem('totalFocusTime')) || 0;
+        const hours = Math.floor(totalFocusTime / 3600);
+        const minutes = Math.floor((totalFocusTime % 3600) / 60);
+        return `${hours}h ${minutes}m`;
     }
 
     function calculateWeeklyProgress(habits) {
@@ -286,4 +289,17 @@ document.addEventListener('DOMContentLoaded', function() {
     menuToggle.addEventListener('click', function() {
         sidebar.classList.toggle('show-sidebar');
     });
+
+    function loadProfilePicture() {
+        const profilePicture = localStorage.getItem('profilePicture');
+        const profilePictureElement = document.getElementById('profile-picture');
+        if (profilePicture && profilePictureElement) {
+            profilePictureElement.src = profilePicture;
+        } else if (profilePictureElement) {
+            profilePictureElement.src = 'path/to/default-profile-picture.jpg';
+        }
+    }
+
+    document.getElementById('focus-time').textContent = habitsData.focusTime;
+    loadProfilePicture();
 });

@@ -33,8 +33,9 @@
                 <button id="menu-toggle" class="icon-button" aria-label="Alternar menú"><i data-lucide="menu"></i></button>
                 <h2>Modo Focus</h2>
                 <div>
-                    <button class="icon-button" id="noti" aria-label="Notificaciones"><i data-lucide="bell"></i></button>
-                    <button class="icon-button" id="settings" aria-label="Configuración"><i data-lucide="settings"></i></button>
+                    <a href="PerfilUsuario.html" class="icon-button profile-picture-container">
+                        <img id="profile-picture" src="path/to/default-profile-picture.jpg" alt="Foto de perfil" class="profile-picture">
+                    </a>
                 </div>
             </header>          
             <section>
@@ -77,6 +78,17 @@
             </div>
         </div>
     </div>
+
+    <div id="alerta-personalizada" class="alerta-personalizada" style="display: none;">
+        <div class="contenido-alerta">
+          <center><h2>Atención</h2></center>
+          <p>Estás intentando salir del modo focus. Recuerda que si sales, se reiniciará tu tiempo de concentración.</p>
+          <div class="botones-alerta">
+            <button id="boton-permanecer" class="btn btn-primario">Permanecer</button>
+            <button id="boton-salir" class="btn btn-secundario">Salir</button>
+          </div>
+        </div>
+      </div>
 
     <script src="ModoFocus.js"></script>
 </body>

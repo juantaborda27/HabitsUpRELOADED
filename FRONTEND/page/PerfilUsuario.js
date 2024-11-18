@@ -30,6 +30,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const reader = new FileReader();
             reader.onload = function(e) {
                 userAvatar.src = e.target.result;
+                // Guardar la imagen en localStorage
+                localStorage.setItem('profilePicture', e.target.result);
             };
             reader.readAsDataURL(file);
         }
@@ -72,13 +74,25 @@ function loadUserData() {
     const userData = JSON.parse(localStorage.getItem('userData')) || {};
     document.getElementById('user-name').textContent = userData.name || 'Nombre de Usuario';
     document.getElementById('user-email').textContent = userData.email || 'usuario@ejemplo.com';
-    document.getElementById('user-avatar').src = userData.avatar || 'img/default-avatar.png';
+    
+    // Cargar la imagen de perfil desde localStorage
+    const profilePicture = localStorage.getItem('profilePicture');
+    if (profilePicture) {
+        document.getElementById('user-avatar').src = profilePicture;
+    } else {
+        document.getElementById('user-avatar').src = 'img/default-avatar.png';
+    }
 }
 
 function saveUserData(data) {
     const currentData = JSON.parse(localStorage.getItem('userData')) || {};
     const updatedData = { ...currentData, ...data };
     localStorage.setItem('userData', JSON.stringify(updatedData));
+    
+    // Asegurarse de que la imagen de perfil se guarde por separado
+    if (data.avatar) {
+        localStorage.setItem('profilePicture', data.avatar);
+    }
 }
 
 function loadUserStats() {

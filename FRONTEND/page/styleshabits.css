@@ -608,3 +608,34 @@ header {
 .secondary-button:hover {
     background-color: #ddd;
 }
+
+#cancel-habit{
+    background-color: var(--danger-color);
+    color: white;
+    border: none;
+    padding:5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#cancel-habit:hover {
+
+    background-color: #f11800;
+
+}
+
+.profile-picture-container {
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-picture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

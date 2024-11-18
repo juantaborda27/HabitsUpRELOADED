@@ -293,8 +293,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }, timeUntilEndOfDay);
     }
 
+    function loadProfilePicture() {
+        const profilePicture = localStorage.getItem('profilePicture');
+        if (profilePicture) {
+            document.getElementById('profile-picture').src = profilePicture;
+        }
+    }
+    
+
     loadHabits();
     scheduleUncompletedHabitsCheck();
+    loadProfilePicture();
+
 });
 
 // Ejecuta este código en la consola para ver los hábitos actuales
