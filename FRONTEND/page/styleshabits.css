@@ -478,21 +478,36 @@ header {
 
 /* Responsive design for user profile */
 @media (max-width: 768px) {
-    .user-profile, .user-stats {
-        padding: 1rem;
+    .app-container {
+        grid-template-columns: 1fr;
     }
 
-    .user-avatar {
-        width: 100px;
-        height: 100px;
+    .sidebar {
+        display: none;
     }
 
-    .user-profile h3 {
-        font-size: 1.2rem;
+    .sidebar.show-sidebar {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
     }
 
-    .user-stats h3 {
-        font-size: 1.1rem;
+    .timer {
+        width: 250px;
+        height: 250px;
+    }
+
+    .circle {
+        width: 230px;
+        height: 230px;
+    }
+
+    .time {
+        font-size: 3rem;
     }
 }
 

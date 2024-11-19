@@ -275,13 +275,14 @@ document.addEventListener('DOMContentLoaded', function(){
     createCalendar();
     syncCalendarWithHabits();
 
+
     const menuToggle = document.getElementById('menu-toggle');
     const sidebar = document.querySelector('.sidebar');
-    if (menuToggle) {
-        menuToggle.addEventListener('click', function() {
-            sidebar.classList.toggle('show-sidebar');
-        });
-    }
+    menuToggle.addEventListener('click', function() {
+        sidebar.classList.toggle('show-sidebar');
+    });
+
+    
 
     function loadProfilePicture() {
         const profilePicture = localStorage.getItem('profilePicture');

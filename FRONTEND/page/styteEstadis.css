@@ -329,8 +329,18 @@ header {
         z-index: 1000;
     }
 
-    .main-cards {
-        grid-template-columns: 1fr;
+    .timer {
+        width: 250px;
+        height: 250px;
+    }
+
+    .circle {
+        width: 230px;
+        height: 230px;
+    }
+
+    .time {
+        font-size: 3rem;
     }
 }
 
