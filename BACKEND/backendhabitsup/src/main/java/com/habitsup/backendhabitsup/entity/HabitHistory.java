@@ -1,5 +1,7 @@
 package com.habitsup.backendhabitsup.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,21 +9,27 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Data;
+
 
 @Data
 @Entity
-public class Usuario {
-
+@Table(name = "habit_history")
+public class HabitHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id_Usuario;
+    private Long id;
 
-    @Column(name = "correoElectronico", nullable = true, length = 500)
-    public String correoElectronico;
-    public String password;
+    @ManyToOne
+    @JoinColumn(name = "habit_id", nullable = false)
+    private Habito habit;
 
-    @ManyToOne 
-    @JoinColumn(name = "id_Habito") 
-    private Habito habito;
+    @Column(nullable = false)
+    private String status;
+
+    @Column(name = "completion_date", nullable = false)
+    private LocalDateTime completionDate;
+
+
 }
