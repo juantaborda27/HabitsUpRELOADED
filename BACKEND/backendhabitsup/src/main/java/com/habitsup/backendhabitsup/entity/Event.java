@@ -16,24 +16,25 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "habits")
-public class Habito {
+@Table(name = "events")
+public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false) // Columna de unión
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Column(nullable = false)
-    private String name;
+    private String title;
 
     @Column(length = 1000)
     private String description;
 
-    private String category;
+    @Column(nullable = false)
+    private LocalDate date;
 
     private LocalTime time;
 
@@ -42,20 +43,10 @@ public class Habito {
 
     private boolean reminder;
 
-    private int streak;
-
-    private int progress;
-
-    private boolean completed;
-
-    private int repeat_days;
-
-
-    @Column(name = "last_completed_date")
-    private LocalDate lastCompletedDate;
+    @Column(name = "repeat_days")
+    private int repeatDays;
 
     @Column(name = "creation_date", nullable = false)
     private LocalDateTime creationDate;
-
 
 }
