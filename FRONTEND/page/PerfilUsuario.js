@@ -68,6 +68,14 @@ document.addEventListener('DOMContentLoaded', function() {
         editProfileForm.style.display = 'none';
         profileForm.reset();
     });
+
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    menuToggle.addEventListener('click', function() {
+        sidebar.classList.toggle('show-sidebar');
+    });
+
+
 });
 
 function loadUserData() {
