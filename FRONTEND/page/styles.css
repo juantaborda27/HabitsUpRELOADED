@@ -1,6 +1,6 @@
 :root {
     --primary-color: #3A1078;
-    --primary-hover: #3A1078;
+    --primary-hover: #4E31AA;
     --text-color: #ffffff;
     --background-dark: rgba(0, 0, 0, 0.5);
 }
@@ -277,30 +277,13 @@ body {
     text-decoration: underline;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .hero-content h1 {
-        font-size: 2.5rem;
-    }
-
-    .nav-link {
-        display: none;
-    }
-
-    .carousel-control {
-        width: 40px;
-        height: 40px;
-    }
-}
-
-
 #title { 
     text-shadow: 2px 2px 5px rgba(10, 0, 0, 0.5);
     font-style: italic;
 }
 
 #bt1:hover, #bt2:hover, #bt3:hover, #bt4:hover {
-    background-color: #7241bd; /* Green */
+    background-color: #7241bd;
 }
 
 .typing-container {
@@ -317,17 +300,11 @@ body {
     font-style: italic;
 }
 
-  /* Animación de parpadeo del cursor */
 @keyframes blink {
-    0%, 100% {
-    border-color: transparent;
+    0%, 100% { border-color: transparent; }
+    50% { border-color: black; }
 }
-    50% {
-      border-color: black;
-    }
-  }
 
-  /* Animaciones para mejorar la experiencia del usuario */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -345,36 +322,58 @@ body {
     transform: scale(1.05);
 }
 
+/* Responsive styles */
 @media (max-width: 768px) {
-    .app-container {
-        grid-template-columns: 1fr;
+    .nav-container {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
-    .sidebar {
-        display: none;
+    .nav-right {
+        margin-top: 1rem;
     }
 
-    .sidebar.show-sidebar {
-        display: block;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1000;
+    .hero-content h1 {
+        font-size: 2.5rem;
     }
 
-    .timer {
-        width: 250px;
-        height: 250px;
+    .hero-content p {
+        font-size: 1rem;
     }
 
-    .circle {
-        width: 230px;
-        height: 230px;
-    }
-
-    .time {
+    .typing-container {
         font-size: 3rem;
+        line-height: 4rem;
+    }
+
+    .carousel-control {
+        width: 40px;
+        height: 40px;
+    }
+
+    .modal-content {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-left, .nav-right {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .typing-container {
+        font-size: 2rem;
+        line-height: 3rem;
+    }
+
+    .btn-lg {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
     }
 }

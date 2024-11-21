@@ -302,4 +302,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('focus-time').textContent = habitsData.focusTime;
     loadProfilePicture();
+
+ 
 });
