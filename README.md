@@ -30,6 +30,12 @@ Desarrollar un Sistema de Gestión y Control de Hábitos Saludables
 ### BASE DATOS
 - SQL Server
 
+### DESARROLLADO POR:
+# Juan Humberto Taborda Acosta
+# Diego Alonso Yelamo Ramirez
+
 </div>
 
 ![LOGO](https://github.com/user-attachments/assets/bc27e7ac-24ac-49f9-89b6-c9553fa03e9b)
+![EXPOSOFTWARE2024](https://github.com/user-attachments/assets/b95c6045-83b7-4292-86a5-291652eb792e)
+
