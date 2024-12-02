@@ -1,5 +1,7 @@
 # HABITS'UP
 
+<div align="left">
+
 ## ¿Qué hace?
 Ofrece una amplia variedad de sugerencias personalizables para mejorar la alimentación, incorporar el ejercicio, gestionar el estrés y optimizar el descanso, ayudando a construir un estilo de vida equilibrado y adaptado a tus necesidades.
 
@@ -28,9 +30,6 @@ Desarrollar un Sistema de Gestión y Control de Hábitos Saludables
 ### BASE DATOS
 - SQL Server
 
-
-## DESARROLLADO POR:
--Juan Humberto Taborda Acosta
--Diego Alonso Yelamo Ramirez 
+</div>
 
 ![LOGO](https://github.com/user-attachments/assets/bc27e7ac-24ac-49f9-89b6-c9553fa03e9b)
