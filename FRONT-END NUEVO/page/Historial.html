@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Historial - Gestión de Hábitos Saludables</title>
+    <link rel="stylesheet" href="styleHistorial.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <div class="app-container">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <center>
+            <img src="../page/img/LOGO.png" alt="" width="60px" height="40px" />
+          </center>
+        </div>
+        <nav>
+          <a href="MisHabitos.html"><i data-lucide="home"></i> Mis Hábitos</a>
+          <a href="ModoFocus.html"><i data-lucide="focus"></i> Modo Focus</a>
+          <a href="Estadisticas.html"
+            ><i data-lucide="bar-chart"></i> Estadísticas</a
+          >
+          <a href="Historial.html" class="active"
+            ><i data-lucide="history"></i> Historial</a
+          >
+          <a href="Sugerencias.html"
+            ><i data-lucide="lightbulb"></i> Sugerencias</a
+          >
+          <a href="Racha.html"><i data-lucide="flame"></i> Racha</a>
+          <a href="Calendario.html"
+            ><i data-lucide="calendar"></i> Calendario</a
+          >
+        </nav>
+      </aside>
+      <main>
+        <header>
+          <button id="menu-toggle" class="icon-button">
+            <i data-lucide="menu"></i>
+          </button>
+          <h2>Historial de Hábitos</h2>
+          <div>
+            <a
+              href="PerfilUsuario.html"
+              class="icon-button profile-picture-container"
+            >
+              <img
+                id="profile-picture"
+                src="path/to/default-profile-picture.jpg"
+                alt="Foto de perfil"
+                class="profile-picture"
+              />
+            </a>
+          </div>
+        </header>
+        <div class="content">
+          <div class="date-filter-container">
+            <div class="date-range-card">
+              <div class="date-inputs">
+                <div class="date-picker-group">
+                  <i data-lucide="calendar"></i>
+                  <input
+                    type="text"
+                    id="date-from"
+                    placeholder="Fecha inicial"
+                  />
+                </div>
+                <div class="date-separator">
+                  <i data-lucide="arrow-right"></i>
+                </div>
+                <div class="date-picker-group">
+                  <i data-lucide="calendar"></i>
+                  <input type="text" id="date-to" placeholder="Fecha final" />
+                </div>
+              </div>
+              <div class="quick-filters">
+                <!-- <button class="filter-btn active">Hoy</button>
+                <button class="filter-btn">Esta semana</button>
+                <button class="filter-btn">Este mes</button>
+                <button class="filter-btn">Este año</button> -->
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-container">
+            <div class="timeline-header">
+              <div class="status-filters">
+                <button class="status-btn active" data-status="all">
+                  <i data-lucide="layers"></i> Todos
+                </button>
+                <button class="status-btn" data-status="completado">
+                  <i data-lucide="check-circle"></i> Completados
+                </button>
+                <button class="status-btn" data-status="creado">
+                  <i data-lucide="plus-circle"></i> Creados
+                </button>
+              </div>
+            </div>
+
+            <div class="timeline" id="habits-timeline">
+              <!-- Los elementos de la línea de tiempo se generarán con JavaScript -->
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="Historial.js"></script>
+  </body>
+</html>

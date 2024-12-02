@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modo Focus - Gestión de Hábitos Saludables</title>
+    <link rel="stylesheet" href="styleFocus.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://kit.fontawesome.com/6f3103b13c.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <center><img src="../page/img/LOGO.png" alt="Logo de la aplicación" width="60" height="40"></center>
+            </div>
+            <nav>
+                <a href="MisHabitos.html"><i data-lucide="home"></i> Mis Hábitos</a>
+                <a href="ModoFocus.html" class="active"><i data-lucide="focus"></i> Modo Focus</a>
+                <a href="Estadisticas.html"><i data-lucide="bar-chart"></i> Estadísticas</a>
+                <a href="Historial.html"><i data-lucide="history"></i> Historial</a>
+                <a href="Sugerencias.html"><i data-lucide="lightbulb"></i> Sugerencias</a>
+                <a href="Racha.html"><i data-lucide="flame"></i> Racha</a>
+                <a href="Calendario.html"><i data-lucide="calendar"></i> Calendario</a>
+            </nav>
+        </aside>
+        <main class="main-container">
+            <header>
+                <button id="menu-toggle" class="icon-button" aria-label="Alternar menú"><i data-lucide="menu"></i></button>
+                <h2>Modo Focus</h2>
+                <div>
+                    <a href="PerfilUsuario.html" class="icon-button profile-picture-container">
+                        <img id="profile-picture" src="path/to/default-profile-picture.jpg" alt="Foto de perfil" class="profile-picture">
+                    </a>
+                </div>
+            </header>          
+            <section>
+                <div class="container">
+                    <h2 id="activity-name">Actividad sin nombre</h2>
+        
+                    <div class="painel">
+                        <p id="work">Trabajo</p>
+                        <p id="break">Descanso</p>
+                    </div>
+        
+                    <div class="timer">
+                        <div class="circle">
+                            <div class="time">
+                                <p id="minutes"></p>
+                                <p>:</p>
+                                <p id="seconds"></p>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="controls">
+                        <button id="start" aria-label="Iniciar/Pausar"><i class="fa-solid fa-play"></i></button>
+                        <button id="reset" aria-label="Reiniciar"><i class="fa-solid fa-arrow-rotate-left"></i></button>
+                        <button id="config" aria-label="Configurar"><i class="fa-solid fa-cog"></i></button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="custom-prompt" class="custom-prompt">
+        <div class="prompt-content">
+            <h3 id="prompt-title"></h3>
+            <p id="prompt-description"></p>
+            <div id="prompt-input-container"></div>
+            <div class="prompt-buttons">
+                <button id="prompt-cancel">Cancelar</button>
+                <button id="prompt-accept">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="alerta-personalizada" class="alerta-personalizada" style="display: none;">
+        <div class="contenido-alerta">
+          <center><h2>Atención</h2></center>
+          <p>Estás intentando salir del modo focus. Recuerda que si sales, se reiniciará tu tiempo de concentración.</p>
+          <div class="botones-alerta">
+            <button id="boton-permanecer" class="btn btn-primario">Permanecer</button>
+            <button id="boton-salir" class="btn btn-secundario">Salir</button>
+          </div>
+        </div>
+      </div>
+
+    <script src="ModoFocus.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Estadísticas - Gestión de Hábitos Saludables</title>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styteEstadis.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="app-container">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <center>
+            <img src="../page/img/LOGO.png" alt="" width="60px" height="40px" />
+          </center>
+        </div>
+        <nav>
+          <a href="MisHabitos.html"><i data-lucide="home"></i> Mis Hábitos</a>
+          <a href="ModoFocus.html"><i data-lucide="focus"></i> Modo Focus</a>
+          <a href="Estadisticas.html" class="active"
+            ><i data-lucide="bar-chart"></i> Estadísticas</a
+          >
+          <a href="Historial.html"><i data-lucide="history"></i> Historial</a>
+          <a href="Sugerencias.html"
+            ><i data-lucide="lightbulb"></i> Sugerencias</a
+          >
+          <a href="Racha.html"><i data-lucide="flame"></i> Racha</a>
+          <a href="Calendario.html"
+            ><i data-lucide="calendar"></i> Calendario</a
+          >
+        </nav>
+      </aside>
+      <main class="main-container">
+        <header>
+          <button id="menu-toggle" class="icon-button">
+            <i data-lucide="menu"></i>
+          </button>
+          <h2>Estadísticas</h2>
+          <div>
+            <a
+              href="PerfilUsuario.html"
+              class="icon-button profile-picture-container"
+            >
+              <img
+                id="profile-picture"
+                src="path/to/default-profile-picture.jpg"
+                alt="Foto de perfil"
+                class="profile-picture"
+              />
+            </a>
+          </div>
+        </header>
+        <div class="main-cards">
+          <div class="card">
+            <div class="card-inner">
+              <h3>HÁBITOS TOTALES</h3>
+              <span class="material-icons-outlined">inventory_2</span>
+            </div>
+            <h1 id="total-habits">0</h1>
+          </div>
+
+          <div class="card">
+            <div class="card-inner">
+              <h3>COMPLETADOS HOY</h3>
+              <span class="material-icons-outlined">check_circle</span>
+            </div>
+            <h1 id="completed-habits">0</h1>
+          </div>
+
+          <div class="card">
+            <div class="card-inner">
+              <h3>RACHA ACTUAL</h3>
+              <span class="material-icons-outlined">local_fire_department</span>
+            </div>
+            <h1 id="current-streak">0</h1>
+          </div>
+
+          <div class="card">
+            <div class="card-inner">
+              <h3>TIEMPO EN FOCUS</h3>
+              <span class="material-icons-outlined">timer</span>
+            </div>
+            <h1 id="focus-time">0h</h1>
+          </div>
+        </div>
+
+        <div class="charts">
+          <div class="charts-card">
+            <h2 class="chart-title">Progreso Semanal</h2>
+            <canvas id="myChart" width="400" height="200"></canvas>
+          </div>
+
+          <div class="charts-card">
+            <h2 class="chart-title">Distribución de Hábitos</h2>
+            <div id="habits-distribution-chart"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="Estadisticas.js"></script>
+  </body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hábitos</title>
+    <link rel="stylesheet" href="styleshabits.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <div class="app-container">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <center>
+            <img src="../page/img/LOGO.png" alt="" width="60px" height="40px" />
+          </center>
+        </div>
+        <nav>
+          <a href="MisHabitos.html" class="active"
+            ><i data-lucide="home"></i> Mis Hábitos</a
+          >
+          <a href="ModoFocus.html"><i data-lucide="focus"></i> Modo Focus</a>
+          <a href="Estadisticas.html"
+            ><i data-lucide="bar-chart"></i> Estadísticas</a
+          >
+          <a href="Historial.html"><i data-lucide="history"></i> Historial</a>
+          <a href="Sugerencias.html"
+            ><i data-lucide="lightbulb"></i> Sugerencias</a
+          >
+          <a href="Racha.html"><i data-lucide="flame"></i> Racha</a>
+          <a href="Calendario.html"
+            ><i data-lucide="calendar"></i> Calendario</a
+          >
+        </nav>
+      </aside>
+      <main class="main-container">
+        <header>
+          <button id="menu-toggle" class="icon-button">
+            <i data-lucide="menu"></i>
+          </button>
+          <h2>Mis Hábitos</h2>
+          <div>
+            <a
+              href="PerfilUsuario.html"
+              class="icon-button profile-picture-container"
+            >
+              <img
+                id="profile-picture"
+                src="path/to/default-profile-picture.jpg"
+                alt="Foto de perfil"
+                class="profile-picture"
+              />
+            </a>
+          </div>
+        </header>
+        <div class="content">
+          <button id="new-habit-btn" class="primary-button">
+            <i data-lucide="plus"></i>
+          </button>
+          <div id="habits-container" class="habits-grid"></div>
+        </div>
+      </main>
+    </div>
+    <div id="modal-container"></div>
+
+    <div id="confirm-dialog" class="modal">
+      <div class="modal-content">
+        <h2>¿Estás seguro?</h2>
+        <p>
+          Esta acción no se puede deshacer. Esto eliminará permanentemente tu
+          hábito.
+        </p>
+        <div class="form-actions">
+          <button id="cancel-delete" class="secondary-button">Cancelar</button>
+          <button id="confirm-delete" class="danger-button">Eliminar</button>
+        </div>
+      </div>
+    </div>
+
+    <form id="habit-form">
+      <div class="form-actions">
+        <button id="cancel-habit" style="display: none"></button>
+        <button class="primary-button" style="display: none"></button>
+      </div>
+    </form>
+
+    <!-- Modal para actualizar el hábito -->
+    <div id="updateHabitModal" class="modal">
+      <div class="modal-content">
+        <div id="Contenedor">
+          <h2>Actualizar Hábito</h2>
+          <form id="habitUpdateForm">
+            <label for="habitName">Nombre</label>
+            <input type="text" id="habitName" name="nombre" required />
+
+            <label for="habitDescription">Descripción</label>
+            <input
+              type="text"
+              id="habitDescription"
+              name="descripcion"
+              required
+            />
+
+            <label for="habitFrequency">Frecuencia</label>
+            <select id="habitFrequency" name="frecuencia" required>
+              <option value="diaria">Diaria</option>
+              <option value="semanal">Semanal</option>
+              <option value="mensual">Mensual</option>
+            </select>
+
+            <label for="habitTime">Hora</label>
+            <input type="time" id="habitTime" name="hora" required />
+
+            <label for="habitRepetitions">Días de Repeticiones</label>
+            <input
+              type="number"
+              id="habitRepetitions"
+              name="diasRepeticiones"
+              required
+              readonly
+            />
+
+            <label for="habitReminder">Recordatorio</label>
+            <input type="checkbox" id="habitReminder" name="recordatorio" />
+
+            <!-- Este campo no es editable -->
+            <label for="habitCreationDate">Fecha de Creación</label>
+            <input
+              type="text"
+              id="habitCreationDate"
+              name="fechaCreacion"
+              disabled
+            />
+
+            <label for="habitProductivity">Categoría</label>
+            <select id="habitProductivity" name="productividadId">
+              <!-- Las opciones se llenarán dinámicamente -->
+            </select>
+
+            <div class="modal-actions">
+              <button type="button" id="closeModalBtn">Cerrar</button>
+              <button type="submit" id="updateHabitBtn">Actualizar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Añadido el elemento de notificación -->
+    <div id="notification" class="notification" style="display: none"></div>
+    <div id="notification-container"></div>
+
+    <script src="MisHabitos.js"></script>
+  </body>
+</html>
+<style>
+  #updateHabitModal {
+    display: none;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: flex-start;
+    z-index: 9999;
+    margin-bottom: 10px;
+  }
+
+  #updateHabitModal .modal-content {
+    background: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    width: 400px;
+  }
+
+  #updateHabitModal .modal-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  #updateHabitModal button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    border: none;
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  #updateHabitModal button:hover {
+    background-color: #45a049;
+  }
+
+  #updateHabitModal input[type="text"],
+  #updateHabitModal input[type="number"],
+  #updateHabitModal input[type="time"],
+  #updateHabitModal select {
+    width: 90%;
+    padding: 10px;
+    margin-top: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  #updateHabitModal input[type="checkbox"] {
+    margin-top: 10px;
+  }
+
+  #updateHabitModal label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  #updateHabitModal .modal-actions button {
+    background-color: #f44336;
+  }
+
+  #updateHabitModal .modal-actions button:hover {
+    background-color: #e53935;
+  }
+  #habitUpdateForm {
+    margin-top: 10%;
+  }
+</style>

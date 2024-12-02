@@ -1,0 +1,95 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\walga\\source\\repos\\BACK-END\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5D9EB344-2AA1-48B4-A0E4-291B65A23EAB}|BACK-END\\BACK-END.csproj|c:\\users\\walga\\source\\repos\\back-end\\back-end\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D9EB344-2AA1-48B4-A0E4-291B65A23EAB}|BACK-END\\BACK-END.csproj|solutionrelative:back-end\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5D9EB344-2AA1-48B4-A0E4-291B65A23EAB}|BACK-END\\BACK-END.csproj|c:\\users\\walga\\source\\repos\\back-end\\back-end\\controllers\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D9EB344-2AA1-48B4-A0E4-291B65A23EAB}|BACK-END\\BACK-END.csproj|solutionrelative:back-end\\controllers\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5D9EB344-2AA1-48B4-A0E4-291B65A23EAB}|BACK-END\\BACK-END.csproj|c:\\users\\walga\\source\\repos\\back-end\\back-end\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D9EB344-2AA1-48B4-A0E4-291B65A23EAB}|BACK-END\\BACK-END.csproj|solutionrelative:back-end\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5D9EB344-2AA1-48B4-A0E4-291B65A23EAB}|BACK-END\\BACK-END.csproj|c:\\users\\walga\\source\\repos\\back-end\\back-end\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{5D9EB344-2AA1-48B4-A0E4-291B65A23EAB}|BACK-END\\BACK-END.csproj|solutionrelative:back-end\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UsuariosController.cs",
+              "DocumentMoniker": "C:\\Users\\walga\\source\\repos\\BACK-END\\BACK-END\\Controllers\\UsuariosController.cs",
+              "RelativeDocumentMoniker": "BACK-END\\Controllers\\UsuariosController.cs",
+              "ToolTip": "C:\\Users\\walga\\source\\repos\\BACK-END\\BACK-END\\Controllers\\UsuariosController.cs",
+              "RelativeToolTip": "BACK-END\\Controllers\\UsuariosController.cs",
+              "ViewState": "AgIAAEwAAAAAAAAAAAAkwFMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-02T00:04:49.283Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Usuario.cs",
+              "DocumentMoniker": "C:\\Users\\walga\\source\\repos\\BACK-END\\BACK-END\\Controllers\\Models\\Usuario.cs",
+              "RelativeDocumentMoniker": "BACK-END\\Controllers\\Models\\Usuario.cs",
+              "ToolTip": "C:\\Users\\walga\\source\\repos\\BACK-END\\BACK-END\\Controllers\\Models\\Usuario.cs",
+              "RelativeToolTip": "BACK-END\\Controllers\\Models\\Usuario.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-02T00:04:25.652Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\walga\\source\\repos\\BACK-END\\BACK-END\\Program.cs",
+              "RelativeDocumentMoniker": "BACK-END\\Program.cs",
+              "ToolTip": "C:\\Users\\walga\\source\\repos\\BACK-END\\BACK-END\\Program.cs",
+              "RelativeToolTip": "BACK-END\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T23:48:27.778Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\walga\\source\\repos\\BACK-END\\BACK-END\\appsettings.json",
+              "RelativeDocumentMoniker": "BACK-END\\appsettings.json",
+              "ToolTip": "C:\\Users\\walga\\source\\repos\\BACK-END\\BACK-END\\appsettings.json",
+              "RelativeToolTip": "BACK-END\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-11-26T23:47:52.322Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Usuario</title>
+    <link rel="stylesheet" href="styleshabits.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <center><img src="../page/img/LOGO.png" alt="Logo" width="60" height="40"></center>
+            </div>
+            <nav>
+                <a href="MisHabitos.html"><i data-lucide="home"></i> Mis Hábitos</a>
+                <a href="ModoFocus.html"><i data-lucide="focus"></i> Modo Focus</a>
+                <a href="Estadisticas.html"><i data-lucide="bar-chart"></i> Estadísticas</a>
+                <a href="Historial.html"><i data-lucide="history"></i> Historial</a>
+                <a href="Sugerencias.html"><i data-lucide="lightbulb"></i> Sugerencias</a>
+                <a href="Racha.html"><i data-lucide="flame"></i> Racha</a>
+                <a href="Calendario.html"><i data-lucide="calendar"></i> Calendario</a>
+                <a href="PerfilUsuario.html" class="active"><i data-lucide="user"></i> Perfil de Usuario</a>
+            </nav>
+        </aside>
+        <main class="main-container">
+            <header>
+                <button id="menu-toggle" class="icon-button"><i data-lucide="menu"></i></button>
+                <h2>Perfil de Usuario</h2>
+                <div>
+                    <button class="icon-button"><i data-lucide="bell"></i></button>
+                    <button class="icon-button"><i data-lucide="settings"></i></button>
+                </div>
+            </header>
+            <div class="content">
+                <div class="user-profile">
+                    <img src="img/default-avatar.png" alt="Avatar de usuario" id="user-avatar" class="user-avatar">
+                    <h3 id="user-name">Nombre de Usuario</h3>
+                    <p id="user-email">usuario@ejemplo.com</p>
+                    <button class="primary-button" id="edit-profile-btn">Editar Perfil</button>
+                </div>
+                <div class="user-stats">
+                    <h3>Estadísticas del Usuario</h3>
+                    <ul>
+                        <li>Hábitos Activos: <span id="active-habits">0</span></li>
+                        <li>Hábitos Completados: <span id="completed-habits">0</span></li>
+                        <li>Racha Actual: <span id="current-streak">0</span> días</li>
+                        <li>Mejor Racha: <span id="best-streak">0</span> días</li>
+                    </ul>
+                </div>
+                
+                <div id="edit-profile-form" class="edit-profile-form" style="display: none;">
+                    <h3>Editar Perfil</h3>
+                    <form id="profile-form">
+                        <div class="form-group">
+                            <label for="edit-username">Nombre de Usuario</label>
+                            <input type="text" id="edit-username" name="username" placeholder="Nombre de Usuario" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-email">Email</label>
+                            <input type="email" id="edit-email" name="email" placeholder="Correo electrónico" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-password">Nueva Contraseña</label>
+                            <input type="password" id="edit-password" name="password" placeholder="Contraseña" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-confirm-password">Confirmar Nueva Contraseña</label>
+                            <input type="password" id="edit-confirm-password" name="confirm-password" placeholder="Confirmar Nueva Contraseña" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-avatar">Foto de Perfil</label>
+                            <input type="file" id="edit-avatar" name="avatar" accept="image/*">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="primary-button">Guardar Cambios</button>
+                            <button type="button" id="cancel-edit" class="secondary-button">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="PerfilUsuario.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
