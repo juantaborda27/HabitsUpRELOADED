@@ -36,6 +36,7 @@ Desarrollar un Sistema de Gestión y Control de Hábitos Saludables
 
 </div>
 
-![LOGO](https://github.com/user-attachments/assets/bc27e7ac-24ac-49f9-89b6-c9553fa03e9b)
-![EXPOSOFTWARE2024](https://github.com/user-attachments/assets/b95c6045-83b7-4292-86a5-291652eb792e)
+<img src="https://github.com/user-attachments/assets/bc27e7ac-24ac-49f9-89b6-c9553fa03e9b" width="300" height="300" />
+<img src="https://github.com/user-attachments/assets/b95c6045-83b7-4292-86a5-291652eb792e" width="300" height="300" />
+
 
