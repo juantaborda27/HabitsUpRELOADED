@@ -40,5 +40,4 @@ Desarrollar un Sistema de Gestión y Control de Hábitos Saludables
 <img src="https://github.com/user-attachments/assets/b95c6045-83b7-4292-86a5-291652eb792e" width="300" height="300" />
 
 (Para aclarar el FRONT Y BACK que dice nuevo es el que ya está conectado a la base de datos, los otros funcionan a base de archivos locales)
-
-
+para que la aplicación funcione correctamente BUSCAR EL APPSEGTINGS DEL BACKEND Y CAMBIAR LA LÍNEA DE CONEXIÓN AL NOMBRE DE SU DISPOSITIVO PARA EL CORRECTO USO 
